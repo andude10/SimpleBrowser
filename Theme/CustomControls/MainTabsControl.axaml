@@ -1,0 +1,20 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:views="clr-namespace:SimpleBrowser.Views">
+
+	<Design.PreviewWith>
+		<Border Padding="20">
+			<views:MainTabControl></views:MainTabControl>
+		</Border>
+	</Design.PreviewWith>
+	
+	<!-- TabControl style -->
+	<Style Selector="TabControl">
+		
+	</Style>
+
+	<!-- TabItem style -->
+	<Style Selector="TabItem">
+	</Style>
+
+</Styles>

@@ -1,0 +1,19 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:webview="clr-namespace:WebViewControl;assembly=WebViewControl.Avalonia"
+		xmlns:views="clr-namespace:SimpleBrowser.Views">
+	<Design.PreviewWith>
+		<Border Padding="20">
+			<!-- Add Controls for Previewer Here -->
+		</Border>
+	</Design.PreviewWith>
+	
+	<Style Selector="views|WebsiteTab">
+		<Setter Property="Content">
+			<Template>
+				<TextBlock FontSize="20" Foreground="White" Text="yes!!"></TextBlock>
+			</Template>
+		</Setter>
+		<Setter Property="Background" Value="Black"></Setter>
+	</Style>
+</Styles>

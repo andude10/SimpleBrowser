@@ -1,0 +1,7 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	
+	<StyleInclude Source="avares://SimpleBrowser/Theme/CustomControls/MainTabsControl.axaml"></StyleInclude>
+	<StyleInclude Source="avares://SimpleBrowser/Theme/Views/MainWindow.axaml"></StyleInclude>
+	<StyleInclude Source="avares://SimpleBrowser/Theme/Views/WebsiteTab.axaml"></StyleInclude>
+</Styles>

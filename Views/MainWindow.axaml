@@ -1,0 +1,29 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SimpleBrowser.ViewModels"
+		xmlns:views="clr-namespace:SimpleBrowser.Views"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:webview="clr-namespace:WebViewControl;assembly=WebViewControl.Avalonia"
+		xmlns:LOC="clr-namespace:SimpleBrowser.Translations"
+		
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="SimpleBrowser.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="SimpleBrowser">
+
+	<Grid>
+		<TabControl Items="{Binding TabVMs}">
+			<TabControl.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding Name}" FontSize="15"></TextBlock>
+				</DataTemplate>
+			</TabControl.ItemTemplate>
+			<TabControl.ContentTemplate>
+				<DataTemplate DataType="vm:WebsiteTabVM">
+					<views:WebsiteTab></views:WebsiteTab>
+				</DataTemplate>
+			</TabControl.ContentTemplate>
+		</TabControl>
+	</Grid>
+</Window>
