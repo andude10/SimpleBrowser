@@ -11,19 +11,12 @@
         x:Class="SimpleBrowser.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="SimpleBrowser">
-
+	<Window.Styles>
+		<StyleInclude Source="avares://SimpleBrowser/Theme/CustomControls/MainTabsControl.axaml"/>
+	</Window.Styles>
+	
 	<Grid>
 		<TabControl Items="{Binding TabVMs}">
-			<TabControl.ItemTemplate>
-				<DataTemplate>
-					<TextBlock Text="{Binding Name}" FontSize="15"></TextBlock>
-				</DataTemplate>
-			</TabControl.ItemTemplate>
-			<TabControl.ContentTemplate>
-				<DataTemplate DataType="vm:WebsiteTabVM">
-					<views:WebsiteTab></views:WebsiteTab>
-				</DataTemplate>
-			</TabControl.ContentTemplate>
 		</TabControl>
 	</Grid>
 </Window>

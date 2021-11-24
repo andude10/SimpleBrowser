@@ -1,20 +1,86 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:views="clr-namespace:SimpleBrowser.Views">
-
-	<Design.PreviewWith>
-		<Border Padding="20">
-			<views:MainTabControl></views:MainTabControl>
-		</Border>
-	</Design.PreviewWith>
+		xmlns:views="clr-namespace:SimpleBrowser.Views"
+		xmlns:vm="using:SimpleBrowser.ViewModels"
+		xmlns:helpers="using:SimpleBrowser.Helpers">
+	<StyleInclude Source="avares://SimpleBrowser/Theme/Constants.axaml"/>
 	
-	<!-- TabControl style -->
+	<Design.PreviewWith>
+		<TabControl Width="500" Height="500">
+			<TabControl.Items>
+				<vm:TabVM Name="somenamesdfsfsdfsdfsdfs"></vm:TabVM>
+				<vm:TabVM Name="somename"></vm:TabVM>
+				<vm:TabVM Name="somename"></vm:TabVM>
+			</TabControl.Items>
+		</TabControl>
+	</Design.PreviewWith>
+	<Styles.Resources>
+		<helpers:CountToWidthConverter x:Key="CountToWidthConverter"></helpers:CountToWidthConverter>
+	</Styles.Resources>
+
 	<Style Selector="TabControl">
-		
+		<Setter Property="ItemsPanel">
+			<ItemsPanelTemplate>
+				<StackPanel Orientation="Horizontal"></StackPanel>
+			</ItemsPanelTemplate>
+		</Setter>
+		<Setter Property="ContentTemplate">
+			<DataTemplate DataType="vm:WebsiteTabVM">
+				<views:WebsiteTab></views:WebsiteTab>
+			</DataTemplate>
+		</Setter>
+		<Setter Property="ItemTemplate">
+			<DataTemplate>
+				<Grid Width="{Binding DataContext.TabItemCount, 
+							 Converter={StaticResource CountToWidthConverter},
+							 RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}}">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition MaxWidth="130"></ColumnDefinition>
+						<ColumnDefinition Width="30"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
+
+					<TextBlock Text="{Binding Name}" FontSize="15"></TextBlock>
+					<Button Grid.Column="1"
+							Margin="9,0,0,0"
+							Background="Transparent">
+						<Viewbox Width="12" Height="12"
+								 Stretch="Uniform"
+								 VerticalAlignment="Center"
+								 HorizontalAlignment="Center">
+							<Canvas Width="20" Height="20">
+								<Path Fill="Black"
+									  Stretch="Uniform"
+									  Data="M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z"/>
+							</Canvas>
+						</Viewbox>
+					</Button>
+				</Grid>
+			</DataTemplate>
+		</Setter>
 	</Style>
 
-	<!-- TabItem style -->
-	<Style Selector="TabItem">
+	<Style Selector="TabControl TabItem">
+		<Setter Property="MinHeight" Value="35"></Setter>
+		<Setter Property="MaxHeight" Value="35"></Setter>
+		<Setter Property="MaxWidth" Value="200"></Setter>
+		<Setter Property="Foreground" Value="{DynamicResource Foreground2}"/>
+		<Setter Property="BorderThickness" Value="0" />
+		<Setter Property="Margin" Value="5"/>
+		<Setter Property="Background" Value="{DynamicResource Background1}"/>
+		<Setter Property="CornerRadius" Value="8"/>
 	</Style>
 
+	<Style Selector="TabControl TabItem:selected">
+		<Setter Property="Background" Value="{DynamicResource MainColor}"/>
+		<Setter Property="Foreground" Value="{DynamicResource Foreground1}"/>
+	</Style>
+	
+	<Style Selector="TabControl TabItem:pointerover /template/ ContentPresenter">
+		<Setter Property="MinHeight" Value="25"></Setter>
+		<Setter Property="MaxHeight" Value="25"></Setter>
+		<Setter Property="MaxWidth" Value="200"></Setter>
+		<Setter Property="BoxShadow" Value="2 2 12 1.1 Gray" />
+		<Setter Property="Background" Value="{DynamicResource Background1}"/>
+		<Setter Property="CornerRadius" Value="8"/>
+	</Style>
 </Styles>

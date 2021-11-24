@@ -1,0 +1,32 @@
+<Style xmlns="https://github.com/avaloniaui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	   xmlns:sys="clr-namespace:System;assembly=mscorlib">
+	
+	<Design.PreviewWith>
+		<StackPanel Margin="10">
+			<StackPanel Margin="10">
+				<Label Content="Background"></Label>
+				<Label Content="MainColor"></Label>
+				<Label Content="SecondColor"></Label>
+			</StackPanel>
+			<StackPanel Margin="10">
+				<Label Content="Color1"></Label>
+				<Label Content="Color2"></Label>
+				<Label Content="Color3"></Label>
+			</StackPanel>
+		</StackPanel>
+	</Design.PreviewWith>
+	<Style.Resources>
+		<!--Brushes-->
+		<SolidColorBrush x:Key="Background1" Color="#e2e8e4"></SolidColorBrush>
+		
+		<SolidColorBrush x:Key="Foreground1" Color="White"></SolidColorBrush>
+		<SolidColorBrush x:Key="Foreground2" Color="Black"></SolidColorBrush>
+		
+		<SolidColorBrush x:Key="MainColor" Color="#006c84"></SolidColorBrush>
+		<SolidColorBrush x:Key="MainColor1" Color="#6eb5c0"></SolidColorBrush>
+		<SolidColorBrush x:Key="MainColor2" Color="#007791"></SolidColorBrush>
+		
+		<SolidColorBrush x:Key="SecondColor" Color="#ffccbb"></SolidColorBrush>
+	</Style.Resources>
+</Style>
