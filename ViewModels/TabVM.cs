@@ -5,6 +5,12 @@ namespace SimpleBrowser.ViewModels
 {
     public class TabVM : ViewModelBase
     {
+        public int _index;
+        public int Index
+        {
+            get { return _index; }
+            set { this.RaiseAndSetIfChanged(ref _index, value); }
+        }
         private string _name;
         public string Name
         {
@@ -16,6 +22,12 @@ namespace SimpleBrowser.ViewModels
         {
             get { return _isSelected; }
             set { this.RaiseAndSetIfChanged(ref _isSelected, value); }
+        }
+        private bool _isTabLast;
+        public bool IsTabLast
+        {
+            get { return _isTabLast; }
+            set { this.RaiseAndSetIfChanged(ref _isTabLast, value); }
         }
     }
 }

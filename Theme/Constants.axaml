@@ -24,7 +24,7 @@
 		<SolidColorBrush x:Key="Foreground2" Color="Black"></SolidColorBrush>
 		
 		<SolidColorBrush x:Key="MainColor" Color="#006c84"></SolidColorBrush>
-		<SolidColorBrush x:Key="MainColor1" Color="#6eb5c0"></SolidColorBrush>
+		<SolidColorBrush x:Key="MainColor1" Color="#007F9C"></SolidColorBrush>
 		<SolidColorBrush x:Key="MainColor2" Color="#007791"></SolidColorBrush>
 		
 		<SolidColorBrush x:Key="SecondColor" Color="#ffccbb"></SolidColorBrush>
