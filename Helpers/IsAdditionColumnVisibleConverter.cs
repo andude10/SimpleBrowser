@@ -27,9 +27,7 @@ namespace SimpleBrowser.Helpers
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var tabWidth = (int)value;
-            var tabCount = 1000 / tabWidth;
-            return tabCount;
+            throw new NotImplementedException();
         }
     }
 }

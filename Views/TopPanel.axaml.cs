@@ -1,17 +1,12 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using Avalonia.Styling;
-using SimpleBrowser.ViewModels;
-using System;
-using WebViewControl;
 
 namespace SimpleBrowser.Views
 {
-    public partial class WebsiteTab : UserControl, IStyleable
+    public partial class TopPanel : UserControl
     {
-        Type IStyleable.StyleKey => typeof(WebsiteTab);
-        public WebsiteTab()
+        public TopPanel()
         {
             InitializeComponent();
         }

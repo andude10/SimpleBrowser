@@ -4,6 +4,8 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Styling;
 using SimpleBrowser.Translations;
 using SimpleBrowser.ViewModels;
+using System;
+using WebViewControl;
 
 namespace SimpleBrowser.Views
 {
@@ -11,12 +13,9 @@ namespace SimpleBrowser.Views
     {
         public MainWindow()
         {
+            WebView.Settings.OsrEnabled = false;
             InitializeComponent();
             DataContext = new MainVM();
-            
-#if DEBUG
-            this.AttachDevTools();
-#endif
         }
 
         private void InitializeComponent()

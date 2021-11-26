@@ -14,10 +14,11 @@ namespace SimpleBrowser.Translations
     {
         private const string IndexerName = "Item";
         private const string IndexerArrayName = "Item[]";
-        private Dictionary<string, string>? m_Strings = null;
+        private static Dictionary<string, string>? m_Strings = null;
 
         public Localizer()
         {
+            LoadLanguage("en");
         }
 
         public bool LoadLanguage(string languageCode)

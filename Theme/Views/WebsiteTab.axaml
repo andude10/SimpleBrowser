@@ -2,18 +2,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:webview="clr-namespace:WebViewControl;assembly=WebViewControl.Avalonia"
 		xmlns:views="clr-namespace:SimpleBrowser.Views">
+	<StyleInclude Source="avares://SimpleBrowser/Theme/Constants.axaml"/>
+	<StyleInclude Source="avares://SimpleBrowser/Theme/Views/TopPanel.axaml"/>
+	
 	<Design.PreviewWith>
-		<Border Padding="20">
-			<!-- Add Controls for Previewer Here -->
-		</Border>
+		<views:WebsiteTab Width="500" Height="500"></views:WebsiteTab>
 	</Design.PreviewWith>
 	
 	<Style Selector="views|WebsiteTab">
+		<Setter Property="Margin" Value="0,-7.5,0,0"/>
 		<Setter Property="Content">
 			<Template>
-				<TextBlock FontSize="20" Foreground="White" Text="yes!!"></TextBlock>
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="50"></RowDefinition>
+						<RowDefinition></RowDefinition>
+					</Grid.RowDefinitions>
+					<views:TopPanel Grid.Row="0"></views:TopPanel>
+					<webview:WebView 
+							Address="{Binding CurrentAddress}"
+							Grid.Row="1">
+					</webview:WebView>
+				</Grid>
 			</Template>
 		</Setter>
-		<Setter Property="Background" Value="Black"></Setter>
 	</Style>
 </Styles>

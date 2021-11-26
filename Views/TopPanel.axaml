@@ -3,8 +3,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 xmlns:views="clr-namespace:SimpleBrowser.Views"
-			 xmlns:webview="clr-namespace:WebViewControl;assembly=WebViewControl.Avalonia"
-             x:Class="SimpleBrowser.Views.WebsiteTab"
-			 Margin="0,-7.5,0,0">
+             x:Class="SimpleBrowser.Views.TopPanel">
+	
 </UserControl>

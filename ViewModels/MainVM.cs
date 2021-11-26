@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Linq;
+using WebViewControl;
 
 namespace SimpleBrowser.ViewModels
 {
@@ -13,10 +14,11 @@ namespace SimpleBrowser.ViewModels
         public MainVM()
         {
             TabVMs = new ObservableCollection<TabVM>();
-            TabVMs.Add(new WebsiteTabVM());
-            TabVMs.Add(new WebsiteTabVM() {Name="Test tab withbigtext"});
-            TabVMs.Add(new WebsiteTabVM());
-            TabVMs.Add(new WebsiteTabVM());
+            TabVMs.Add(new WebsiteTabVM(new WebView()));
+            TabVMs.Add(new WebsiteTabVM(new WebView()){ Name="Test tab withbigtext"});
+            TabVMs.Add(new WebsiteTabVM(new WebView()));
+            TabVMs.Add(new WebsiteTabVM(new WebView()));
+            SelectedTab = TabVMs.First();
 
             SortTabs();
         }
@@ -30,7 +32,16 @@ namespace SimpleBrowser.ViewModels
                 TabItemCount = TabVMs.Count;
             }
         }
-
+        private TabVM _selectedTab;
+        public TabVM SelectedTab
+        {
+            get { return _selectedTab; }
+            set 
+            { 
+                this.RaiseAndSetIfChanged(ref _selectedTab, value);
+                SortTabs();
+            }
+        }
         private double _tabItemCount;
         public double TabItemCount
         {
@@ -46,7 +57,7 @@ namespace SimpleBrowser.ViewModels
             {
                 return _addNewTab ??= new RelayCommand(() =>
                 {
-                    TabVMs.Add(new WebsiteTabVM());
+                    TabVMs.Add(new WebsiteTabVM(new WebView()));
                     SortTabs();
                 });
             }
@@ -71,8 +82,11 @@ namespace SimpleBrowser.ViewModels
             {
                 TabVMs[i].Index = i;
                 TabVMs[i].IsTabLast = false;
+                TabVMs[i].IsSelected = false;
             }
             TabVMs.Last().IsTabLast = true;
+            TabVMs.First(t => t == SelectedTab).IsSelected = true;
+            TabItemCount = TabVMs.Count;
         }
     }
 }

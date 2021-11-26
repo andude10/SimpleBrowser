@@ -4,19 +4,18 @@
 		xmlns:views="clr-namespace:SimpleBrowser.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:webview="clr-namespace:WebViewControl;assembly=WebViewControl.Avalonia"
 		xmlns:LOC="clr-namespace:SimpleBrowser.Translations"
 		
+		TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+		WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="SimpleBrowser.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
         Title="SimpleBrowser">
-	<Window.Styles>
-		<StyleInclude Source="avares://SimpleBrowser/Theme/CustomControls/MainTabsControl.axaml"/>
-	</Window.Styles>
-	
 	<Grid>
-		<TabControl Items="{Binding TabVMs}">
+		<TabControl Items="{Binding TabVMs}"
+			SelectedItem="{Binding SelectedTab}"
+			Margin="-12,0,-12,0">
 		</TabControl>
 	</Grid>
 </Window>
