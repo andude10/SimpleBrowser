@@ -14,10 +14,11 @@ namespace SimpleBrowser.ViewModels
         public MainVM()
         {
             TabVMs = new ObservableCollection<TabVM>();
-            TabVMs.Add(new WebsiteTabVM(new WebView()));
-            TabVMs.Add(new WebsiteTabVM(new WebView()){ Name="Test tab withbigtext"});
-            TabVMs.Add(new WebsiteTabVM(new WebView()));
-            TabVMs.Add(new WebsiteTabVM(new WebView()));
+
+            TabVMs.Add(new WebsiteTabVM());
+            TabVMs.Add(new WebsiteTabVM(){ Name="Test tab withbigtext"});
+            TabVMs.Add(new WebsiteTabVM());
+            TabVMs.Add(new WebsiteTabVM());
             SelectedTab = TabVMs.First();
 
             SortTabs();
@@ -42,6 +43,7 @@ namespace SimpleBrowser.ViewModels
                 SortTabs();
             }
         }
+
         private double _tabItemCount;
         public double TabItemCount
         {
@@ -57,7 +59,7 @@ namespace SimpleBrowser.ViewModels
             {
                 return _addNewTab ??= new RelayCommand(() =>
                 {
-                    TabVMs.Add(new WebsiteTabVM(new WebView()));
+                    TabVMs.Add(new WebsiteTabVM());
                     SortTabs();
                 });
             }

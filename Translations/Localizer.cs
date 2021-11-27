@@ -19,6 +19,7 @@ namespace SimpleBrowser.Translations
         public Localizer()
         {
             LoadLanguage("en");
+            SelectedLanguageCode = "en";
         }
 
         public bool LoadLanguage(string languageCode)
@@ -55,6 +56,7 @@ namespace SimpleBrowser.Translations
         } // LoadLanguage
 
         public string LanguageCode { get; private set; }
+        public static string SelectedLanguageCode { get; set; }
 
         public string this[string key]
         {
