@@ -8,12 +8,12 @@ using WebViewControl;
 
 namespace SimpleBrowser.Views
 {
-    public partial class WebsiteTab : UserControl, IStyleable
+    public partial class WebsiteTab : UserControl
     {
-        Type IStyleable.StyleKey => typeof(WebsiteTab);
         public WebsiteTab()
         {
             InitializeComponent();
+            this.DataContext = new WebsiteTabVM(this.FindControl<WebView>("webView"));
         }
 
         private void InitializeComponent()

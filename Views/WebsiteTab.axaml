@@ -7,4 +7,20 @@
 			 xmlns:webview="clr-namespace:WebViewControl;assembly=WebViewControl.Avalonia"
              x:Class="SimpleBrowser.Views.WebsiteTab"
 			 Margin="0,-7.5,0,0">
+	<UserControl.Styles>
+		<StyleInclude Source="/Theme/Views/TopPanel.axaml"/>
+	</UserControl.Styles>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="50"></RowDefinition>
+			<RowDefinition></RowDefinition>
+		</Grid.RowDefinitions>
+		<views:TopPanel Grid.Row="0"></views:TopPanel>
+		<webview:WebView
+				x:Name="webView"
+				Address="{Binding CurrentAddress}"
+				Grid.Row="1"
+							>
+		</webview:WebView>
+	</Grid>
 </UserControl>

@@ -3,6 +3,5 @@
 	
 	<StyleInclude Source="avares://SimpleBrowser/Theme/CustomControls/MainTabsControl.axaml"></StyleInclude>
 	<StyleInclude Source="avares://SimpleBrowser/Theme/Views/MainWindow.axaml"></StyleInclude>
-	<StyleInclude Source="avares://SimpleBrowser/Theme/Views/WebsiteTab.axaml"></StyleInclude>
 	<StyleInclude Source="avares://SimpleBrowser/Theme/Constants.axaml"></StyleInclude>
 </Styles>

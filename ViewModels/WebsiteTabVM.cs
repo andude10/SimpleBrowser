@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
 using SimpleBrowser.API;
+using System.Net;
+using System.IO;
 
 namespace SimpleBrowser.ViewModels
 {
@@ -20,7 +22,14 @@ namespace SimpleBrowser.ViewModels
             SearchSuggestions = new ObservableCollection<string>();
             SearchSystem = new GoogleSearcher();
             CurrentAddress = "https://www.google.com/";
-            History.Add(CurrentAddress);
+        }
+        public WebsiteTabVM(WebView webView)
+        {
+            Refresh = new RelayCommand(() => webView.Reload());
+            Name = Localizer.Instance["NewPage"];
+            SearchSuggestions = new ObservableCollection<string>();
+            SearchSystem = new GoogleSearcher();
+            CurrentAddress = "https://www.google.com/";
         }
         private string _name;
         public new string Name
@@ -78,10 +87,8 @@ namespace SimpleBrowser.ViewModels
             set 
             {
                 this.RaiseAndSetIfChanged(ref _currentAddress, value);
-                if(History.All(a => a != CurrentAddress))
-                {
-                    History.Add(CurrentAddress);
-                }
+                History.Add(CurrentAddress);
+                SearchText = CurrentAddress;
             }
         }
 
@@ -105,6 +112,11 @@ namespace SimpleBrowser.ViewModels
             {
                 return _querySet ??= new RelayCommand(async () =>
                 {
+                    bool isAddress = Uri.IsWellFormedUriString(SearchText, UriKind.Absolute);
+                    if(isAddress)
+                    {
+                        return;
+                    }
                     ObservableCollection<string>result = new ObservableCollection<string>(await SearchSystem.GetSearchSuggestions(SearchText));
                     if(result != null)
                     {
@@ -136,24 +148,17 @@ namespace SimpleBrowser.ViewModels
             {
                 return _redo ??= new RelayCommand(() =>
                 {
-                    int index = History.LastIndexOf(CurrentAddress);
-                    CurrentAddress = History[index + 1];
-                    SearchText = CurrentAddress;
+                    if(History.LastOrDefault() != CurrentAddress)
+                    {
+                        int index = History.LastIndexOf(CurrentAddress);
+                        CurrentAddress = History[index + 1];
+                        SearchText = CurrentAddress;
+                    }
                 },
-                () => History.Count > 0 && History.LastOrDefault() != CurrentAddress);
+                () => History.Count > 0);
             }
         }
 
-        private ICommand _refresh;
-        public ICommand Refresh
-        {
-            get
-            {
-                return _refresh ??= new RelayCommand(() =>
-                {
-                    CurrentAddress = SearchSystem.Search(SearchText);
-                });
-            }
-        }
+        public ICommand Refresh { get; }
     }
 }

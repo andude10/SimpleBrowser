@@ -14,7 +14,6 @@ namespace SimpleBrowser.ViewModels
         public MainVM()
         {
             TabVMs = new ObservableCollection<TabVM>();
-
             TabVMs.Add(new WebsiteTabVM());
             TabVMs.Add(new WebsiteTabVM(){ Name="Test tab withbigtext"});
             TabVMs.Add(new WebsiteTabVM());
