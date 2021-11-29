@@ -29,5 +29,11 @@ namespace SimpleBrowser.ViewModels
             get { return _isTabLast; }
             set { this.RaiseAndSetIfChanged(ref _isTabLast, value); }
         }
+        private string _iconUrl;
+        public string IconUrl
+        {
+            get { return _iconUrl; }
+            set { this.RaiseAndSetIfChanged(ref _iconUrl, value); }
+        }
     }
 }

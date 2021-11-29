@@ -20,12 +20,14 @@ namespace SimpleBrowser.API
 		private const string _RUsuggestSearchUrl = "http://www.google.com/complete/search?output=toolbar&q={0}&hl=ru";
 		private const string _uriSearchString = "http://google.com/search?q=";
 
-		/// <summary>
-		/// Gets the search suggestions from Google.
-		/// </summary>
-		/// <param name="query">The query.</param>
-		/// <returns>A list of <see cref="GoogleSuggestion"/>s.</returns>
-		public async Task<IEnumerable<string>> GetSearchSuggestions(string query)
+        public string Name { get; } = "Google";
+
+        /// <summary>
+        /// Gets the search suggestions from Google.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns>A list of <see cref="GoogleSuggestion"/>s.</returns>
+        public async Task<IEnumerable<string>> GetSearchSuggestions(string query)
 		{
 			if (String.IsNullOrWhiteSpace(query))
 			{
@@ -67,8 +69,7 @@ namespace SimpleBrowser.API
 
         public string Search(string searchtext)
         {
-			string resultUri = _uriSearchString + searchtext.Trim();
-			return resultUri;
+			return _uriSearchString + searchtext.Trim();
 		}
     }
 

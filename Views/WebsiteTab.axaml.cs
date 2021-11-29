@@ -20,6 +20,7 @@ namespace SimpleBrowser.Views
             WeakReferenceMessenger.Default.Register<WebsiteTab, RefreshPageMessage>(this, RefreshPage);
             WeakReferenceMessenger.Default.Register<WebsiteTab, GoBackPageMessage>(this, GoBackPage);
             WeakReferenceMessenger.Default.Register<WebsiteTab, GoForwardPageMessage>(this, GoForwardPage);
+            WeakReferenceMessenger.Default.Register<WebsiteTab, GetUrlTitleMessage>(this, GetTitle);
         }
 
         private void InitializeComponent()
@@ -29,6 +30,7 @@ namespace SimpleBrowser.Views
 
         private void RefreshPage(WebsiteTab recipient, RefreshPageMessage message)
         {
+            var i = this.FindControl<WebView>("webView").Title;
             this.FindControl<WebView>("webView").Reload();
         }
         private void GoBackPage(WebsiteTab recipient, GoBackPageMessage message)
@@ -38,6 +40,11 @@ namespace SimpleBrowser.Views
         private void GoForwardPage(WebsiteTab recipient, GoForwardPageMessage message)
         {
             this.FindControl<WebView>("webView").GoForward();
+        }
+        private void GetTitle(WebsiteTab recipient, GetUrlTitleMessage message)
+        {
+            var i = this.FindControl<WebView>("webView").Title;
+            message.Reply(i);
         }
     }
 }

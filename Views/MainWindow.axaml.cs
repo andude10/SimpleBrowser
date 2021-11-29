@@ -14,6 +14,7 @@ namespace SimpleBrowser.Views
         public MainWindow()
         {
             WebView.Settings.OsrEnabled = false;
+            WebView.Settings.LogFile = "ceflog.txt";
             InitializeComponent();
             DataContext = new MainVM();
         }

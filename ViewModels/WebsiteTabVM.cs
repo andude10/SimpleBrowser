@@ -2,17 +2,12 @@
 using ReactiveUI;
 using SimpleBrowser.Translations;
 using System;
-using System.ComponentModel;
-using WebViewControl;
 using System.Windows.Input;
-using System.Collections.Generic;
-using System.Linq;
 using System.Collections.ObjectModel;
 using SimpleBrowser.API;
 using Microsoft.Toolkit.Mvvm.Messaging;
-using System.Net;
-using System.IO;
 using SimpleBrowser.Services;
+using System.Collections.Generic;
 
 namespace SimpleBrowser.ViewModels
 {
@@ -21,15 +16,10 @@ namespace SimpleBrowser.ViewModels
         public WebsiteTabVM()
         {
             Name = Localizer.Instance["NewPage"];
+            History = new List<string>();
             SearchSuggestions = new ObservableCollection<string>();
             SearchSystem = new GoogleSearcher();
             CurrentAddress = "https://www.google.com/";
-        }
-        private string _name;
-        public new string Name
-        {
-            get { return _name; }
-            set { this.RaiseAndSetIfChanged(ref _name, value); }
         }
 
         private ObservableCollection<string> _searchSuggestions;
@@ -60,14 +50,35 @@ namespace SimpleBrowser.ViewModels
             set { this.RaiseAndSetIfChanged(ref _searchText, value); }
         }
 
+        private List<string> _history;
+        public List<string> History
+        {
+            get { return _history; }
+            set { this.RaiseAndSetIfChanged(ref _history, value); }
+        }
+
         private string _currentAddress;
         public string CurrentAddress
         {
             get { return _currentAddress; }
-            set 
+            set
             {
                 this.RaiseAndSetIfChanged(ref _currentAddress, value);
+                History.Add(CurrentAddress);
                 SearchText = CurrentAddress;
+
+                IconUrl = "http://www.google.com/s2/favicons?domain=" + new Uri(CurrentAddress).Host;
+
+                ChangeSiteIconMessage changeSiteIcon = new ChangeSiteIconMessage(IconUrl);
+                WeakReferenceMessenger.Default.Send(changeSiteIcon);
+                try
+                {
+                    Name = WeakReferenceMessenger.Default.Send<GetUrlTitleMessage>();
+                }
+                catch
+                {
+                    Name = Localizer.Instance["NewPage"];
+                }
             }
         }
 
@@ -92,12 +103,12 @@ namespace SimpleBrowser.ViewModels
                 return _querySet ??= new RelayCommand(async () =>
                 {
                     bool isAddress = Uri.IsWellFormedUriString(SearchText, UriKind.Absolute);
-                    if(isAddress)
+                    if (isAddress)
                     {
                         return;
                     }
-                    ObservableCollection<string>result = new ObservableCollection<string>(await SearchSystem.GetSearchSuggestions(SearchText));
-                    if(result != null)
+                    ObservableCollection<string> result = new ObservableCollection<string>(await SearchSystem.GetSearchSuggestions(SearchText));
+                    if (result != null)
                     {
                         SearchSuggestions = result;
                     }
@@ -139,5 +150,23 @@ namespace SimpleBrowser.ViewModels
                 });
             }
         }
+        public ICommand _changeTitle;
+        public ICommand ChangeTitle
+        {
+            get
+            {
+                return _changeTitle ??= new RelayCommand(() =>
+                {
+                    try
+                    {
+                        Name = WeakReferenceMessenger.Default.Send<GetUrlTitleMessage>();
+                    }
+                    catch
+                    {
+                        Name = Localizer.Instance["NewPage"];
+                    }
+                });
+            }
+        }
     }
-}
+} 

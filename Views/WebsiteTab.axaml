@@ -6,6 +6,9 @@
 			 xmlns:views="clr-namespace:SimpleBrowser.Views"
 			 xmlns:webview="clr-namespace:WebViewControl;assembly=WebViewControl.Avalonia"
              x:Class="SimpleBrowser.Views.WebsiteTab"
+			 xmlns:i="using:Avalonia.Xaml.Interactivity"
+			 xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+			 xmlns:ic="using:Avalonia.Xaml.Interactions.Custom"
 			 Margin="0,-7.5,0,0">
 	<UserControl.Styles>
 		<StyleInclude Source="/Theme/Views/TopPanel.axaml"/>
@@ -20,6 +23,14 @@
 				x:Name="webView"
 				Address="{Binding CurrentAddress}"
 				Grid.Row="1">
+			<i:Interaction.Behaviors>
+				<ia:EventTriggerBehavior EventName="Navigated" SourceObject="{Binding #webView}">
+					<ia:InvokeCommandAction Command="{Binding ChangeTitle}"></ia:InvokeCommandAction>
+				</ia:EventTriggerBehavior>
+				<ia:EventTriggerBehavior EventName=" " SourceObject="{Binding #webView}">
+					<ia:InvokeCommandAction Command="{Binding ChangeTitle}"></ia:InvokeCommandAction>
+				</ia:EventTriggerBehavior>
+			</i:Interaction.Behaviors>
 		</webview:WebView>
 	</Grid>
 </UserControl>
