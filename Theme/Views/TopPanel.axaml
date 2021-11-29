@@ -61,7 +61,7 @@
 						</Style>
 					</Grid.Styles>
 					<StackPanel Orientation="Horizontal">
-						<Button Command="{Binding Undo}"
+						<Button Command="{Binding GoBack}"
 								Width="30" Height="30"
 								Margin="5,0,0,0"
 								Background="Transparent"
@@ -75,7 +75,7 @@
 								</Canvas>
 							</Viewbox>
 						</Button>
-						<Button Command="{Binding Redo}"
+						<Button Command="{Binding GoForward}"
 								Width="30" Height="30"
 								Margin="5,0,0,0"
 								Background="Transparent"

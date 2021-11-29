@@ -19,8 +19,7 @@
 		<webview:WebView
 				x:Name="webView"
 				Address="{Binding CurrentAddress}"
-				Grid.Row="1"
-							>
+				Grid.Row="1">
 		</webview:WebView>
 	</Grid>
 </UserControl>

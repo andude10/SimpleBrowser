@@ -9,8 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
 using SimpleBrowser.API;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using System.Net;
 using System.IO;
+using SimpleBrowser.Services;
 
 namespace SimpleBrowser.ViewModels
 {
@@ -23,33 +25,11 @@ namespace SimpleBrowser.ViewModels
             SearchSystem = new GoogleSearcher();
             CurrentAddress = "https://www.google.com/";
         }
-        public WebsiteTabVM(WebView webView)
-        {
-            Refresh = new RelayCommand(() => webView.Reload());
-            Name = Localizer.Instance["NewPage"];
-            SearchSuggestions = new ObservableCollection<string>();
-            SearchSystem = new GoogleSearcher();
-            CurrentAddress = "https://www.google.com/";
-        }
         private string _name;
         public new string Name
         {
             get { return _name; }
             set { this.RaiseAndSetIfChanged(ref _name, value); }
-        }
-
-        private Uri _uri;
-        public Uri Uri
-        {
-            get { return _uri; }
-            set { this.RaiseAndSetIfChanged(ref _uri, value); }
-        }
-
-        private List<string> _history = new List<string>();
-        public List<string> History
-        {
-            get { return _history; }
-            set { this.RaiseAndSetIfChanged(ref _history, value); }
         }
 
         private ObservableCollection<string> _searchSuggestions;
@@ -87,7 +67,6 @@ namespace SimpleBrowser.ViewModels
             set 
             {
                 this.RaiseAndSetIfChanged(ref _currentAddress, value);
-                History.Add(CurrentAddress);
                 SearchText = CurrentAddress;
             }
         }
@@ -126,39 +105,39 @@ namespace SimpleBrowser.ViewModels
             }
         }
 
-        private ICommand _undo;
-        public ICommand Undo
+        private ICommand _goBack;
+        public ICommand GoBack
         {
             get
             {
-                return _undo ??= new RelayCommand(() =>
+                return _goBack ??= new RelayCommand(() =>
                 {
-                    int index = History.LastIndexOf(CurrentAddress);
-                    CurrentAddress = History[index - 1];
-                    SearchText = CurrentAddress;
-                },
-                () => History.Count > 0 || History.FirstOrDefault() != CurrentAddress);
+                    WeakReferenceMessenger.Default.Send<GoBackPageMessage>();
+                });
             }
         }
 
-        private ICommand _redo;
-        public ICommand Redo
+        private ICommand _goForward;
+        public ICommand GoForward
         {
             get
             {
-                return _redo ??= new RelayCommand(() =>
+                return _goForward ??= new RelayCommand(() =>
                 {
-                    if(History.LastOrDefault() != CurrentAddress)
-                    {
-                        int index = History.LastIndexOf(CurrentAddress);
-                        CurrentAddress = History[index + 1];
-                        SearchText = CurrentAddress;
-                    }
-                },
-                () => History.Count > 0);
+                    WeakReferenceMessenger.Default.Send<GoForwardPageMessage>();
+                });
             }
         }
-
-        public ICommand Refresh { get; }
+        private ICommand _refresh;
+        public ICommand Refresh
+        {
+            get
+            {
+                return _refresh ??= new RelayCommand(() =>
+                {
+                    WeakReferenceMessenger.Default.Send<RefreshPageMessage>();
+                });
+            }
+        }
     }
 }

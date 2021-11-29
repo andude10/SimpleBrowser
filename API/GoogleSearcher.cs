@@ -67,16 +67,8 @@ namespace SimpleBrowser.API
 
         public string Search(string searchtext)
         {
-			bool isAddress = Uri.IsWellFormedUriString(searchtext, UriKind.Absolute);
-			if(isAddress)
-            {
-				return searchtext;
-			}
-			else
-            {
-				string resultUri = _uriSearchString + searchtext.Trim();
-				return resultUri;
-			}
+			string resultUri = _uriSearchString + searchtext.Trim();
+			return resultUri;
 		}
     }
 
