@@ -9,5 +9,11 @@
 	<Application.Styles>
 		<StyleInclude Source="avares://SimpleBrowser/Theme/Generic.axaml"></StyleInclude>
 		<FluentTheme Mode="Light"/>
+		
+		<Style Selector="TabItem[IsSelected=true] /template/ Border#PART_SelectedPipe">
+			<Setter Property="IsVisible" Value="False" />
+			<Setter Property="Background" Value="White"/>
+			<Setter Property="TextBlock.Foreground" Value="White"/>
+		</Style>
 	</Application.Styles>
 </Application>

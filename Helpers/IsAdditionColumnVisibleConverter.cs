@@ -16,7 +16,7 @@ namespace SimpleBrowser.Helpers
             double result;
             if(isLast)
             {
-                result = 30;
+                result = 25;
             }
             else
             {

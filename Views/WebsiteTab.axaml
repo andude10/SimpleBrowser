@@ -27,9 +27,6 @@
 				<ia:EventTriggerBehavior EventName="Navigated" SourceObject="{Binding #webView}">
 					<ia:InvokeCommandAction Command="{Binding ChangeTitle}"></ia:InvokeCommandAction>
 				</ia:EventTriggerBehavior>
-				<ia:EventTriggerBehavior EventName=" " SourceObject="{Binding #webView}">
-					<ia:InvokeCommandAction Command="{Binding ChangeTitle}"></ia:InvokeCommandAction>
-				</ia:EventTriggerBehavior>
 			</i:Interaction.Behaviors>
 		</webview:WebView>
 	</Grid>

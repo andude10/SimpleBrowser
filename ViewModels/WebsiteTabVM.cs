@@ -8,6 +8,7 @@ using SimpleBrowser.API;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using SimpleBrowser.Services;
 using System.Collections.Generic;
+using Avalonia.Threading;
 
 namespace SimpleBrowser.ViewModels
 {
@@ -124,6 +125,10 @@ namespace SimpleBrowser.ViewModels
                 return _goBack ??= new RelayCommand(() =>
                 {
                     WeakReferenceMessenger.Default.Send<GoBackPageMessage>();
+                    if (ChangeTitle.CanExecute(null))
+                    {
+                        ChangeTitle.Execute(null);
+                    }
                 });
             }
         }
@@ -136,6 +141,10 @@ namespace SimpleBrowser.ViewModels
                 return _goForward ??= new RelayCommand(() =>
                 {
                     WeakReferenceMessenger.Default.Send<GoForwardPageMessage>();
+                    if (ChangeTitle.CanExecute(null))
+                    {
+                        ChangeTitle.Execute(null);
+                    }
                 });
             }
         }
@@ -155,7 +164,7 @@ namespace SimpleBrowser.ViewModels
         {
             get
             {
-                return _changeTitle ??= new RelayCommand(() =>
+                return _changeTitle ??= new RelayCommand( () =>
                 {
                     try
                     {
