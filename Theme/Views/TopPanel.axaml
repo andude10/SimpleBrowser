@@ -159,7 +159,26 @@
 							</Viewbox>
 						</Button>
 					</StackPanel>
-
+					<AutoCompleteBox Name="searchBox"
+									 Grid.Column="1"
+									 Items="{Binding SearchSuggestions}"
+									 SelectedItem="{Binding SelectedResult}"
+									 Text="{Binding SearchText}"
+									 VerticalAlignment="Center"
+									 Height="35"
+									 Margin="0,6,0,10"
+									 CornerRadius="15"
+									 BorderThickness="0"
+									 Background="{DynamicResource Background1}">
+						<i:Interaction.Behaviors>
+							<ia:EventTriggerBehavior EventName="TextChanged" SourceObject="{Binding #searchBox}">
+								<ia:InvokeCommandAction Command="{Binding QuerySet}"></ia:InvokeCommandAction>
+							</ia:EventTriggerBehavior>
+						</i:Interaction.Behaviors>
+						<AutoCompleteBox.KeyBindings>
+							<KeyBinding Gesture="Enter" Command="{Binding NavigateCommand}" />
+						</AutoCompleteBox.KeyBindings>
+					</AutoCompleteBox>
 					<StackPanel Orientation="Horizontal"
 								Grid.Column="2">
 						<ToggleButton x:Name="OpenClosePopupButton"
