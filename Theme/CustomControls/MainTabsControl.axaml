@@ -2,7 +2,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:views="clr-namespace:SimpleBrowser.Views"
 		xmlns:vm="using:SimpleBrowser.ViewModels"
-		xmlns:helpers="using:SimpleBrowser.Helpers">
+		xmlns:helpers="using:SimpleBrowser.Helpers"
+		xmlns:i="using:Avalonia.Xaml.Interactivity"
+		xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+        xmlns:ic="using:Avalonia.Xaml.Interactions.Custom">
 	<StyleInclude Source="avares://SimpleBrowser/Theme/Constants.axaml"/>
 	
 	<Design.PreviewWith>
@@ -18,7 +21,7 @@
 		<helpers:IsAdditionColumnVisibleConverter x:Key="IsAdditionColumnVisibleConverter"/>
 	</Styles.Resources>
 	
-	<Style Selector="TabControl">
+    <Style Selector="TabControl">
 		<Setter Property="BorderThickness" Value="0"></Setter>
 		<Setter Property="ItemsPanel">
 			<ItemsPanelTemplate>
@@ -30,23 +33,22 @@
 		</Setter>
 		<Setter Property="ContentTemplate">
 			<DataTemplate DataType="vm:WebsiteTabVM">
-				<views:WebsiteTab IsEnabled="{Binding IsSelected}"></views:WebsiteTab>
+				<views:WebsiteTab></views:WebsiteTab>
 			</DataTemplate>
 		</Setter>
 		<Setter Property="ItemTemplate">
-			<DataTemplate DataType="vm:TabVM">
-				<Grid HorizontalAlignment="Center" VerticalAlignment="Center"
-					  Margin="5">
+			<DataTemplate>
+				<Grid Margin="5">
 					<Grid.Styles>
 						<Style Selector="Button[IsPointerOver=true] /template/ ContentPresenter">
-							<Setter Property="Background" Value="#60000000"/>
+							<Setter Property="Background" Value="#40000000"/>
 							<Style.Animations>
 								<Animation Duration="0:0:0.3">
 									<KeyFrame Cue="0%">
 										<Setter Property="Background" Value="#10000000"/>
 									</KeyFrame>
 									<KeyFrame Cue="100%">
-										<Setter Property="Background" Value="#60000000"/>
+										<Setter Property="Background" Value="#40000000"/>
 									</KeyFrame>
 								</Animation>
 							</Style.Animations>
@@ -56,7 +58,7 @@
 							<Style.Animations>
 								<Animation Duration="0:0:0.3">
 									<KeyFrame Cue="0%">
-										<Setter Property="Background" Value="#60000000"/>
+										<Setter Property="Background" Value="#40000000"/>
 									</KeyFrame>
 									<KeyFrame Cue="100%">
 										<Setter Property="Background" Value="Transparent"/>
@@ -94,12 +96,16 @@
 					</Grid.Styles>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition MaxWidth="180"></ColumnDefinition>
-						<ColumnDefinition Width="30"></ColumnDefinition>
 						<ColumnDefinition Width="Auto"></ColumnDefinition>
 					</Grid.ColumnDefinitions>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"></ColumnDefinition>
+							<ColumnDefinition Width="30"></ColumnDefinition>
+						</Grid.ColumnDefinitions>
 						<TextBlock Text="{Binding Name}"
 								   FontSize="16"
-								   MaxWidth="120"></TextBlock>
+								   HorizontalAlignment="Left"></TextBlock>
 						<Button Command="{Binding DataContext.RemoveTab, 
 									  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}}"
 								CommandParameter="{Binding Index}"
@@ -120,42 +126,55 @@
 								</Canvas>
 							</Viewbox>
 						</Button>
+					</Grid>
 
-						<Button Command="{Binding DataContext.AddNewTab, 
+					<Button Command="{Binding DataContext.AddNewTab, 
 									  RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}}"
-								CommandParameter="{Binding Index}"
-								Width="{Binding IsTabLast, Converter={StaticResource IsAdditionColumnVisibleConverter}}"
-								Classes="addtab"
-								Grid.Column="2"
-								Margin="10,0,0,0"
-								HorizontalAlignment="Right"
-								CornerRadius="20">
-							<Viewbox Width="14" Height="14"
-									 Margin="3,5,0,0"
-									 Stretch="Fill"
-									 VerticalAlignment="Center"
-									 HorizontalAlignment="Center">
-								<Canvas Width="20" Height="20">
-									<Path Fill="Black"
-										  Stretch="Fill"
-										  Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/>
-								</Canvas>
-							</Viewbox>
-						</Button>
+							CommandParameter="{Binding Index}"
+							Width="{Binding IsTabLast, Converter={StaticResource IsAdditionColumnVisibleConverter}}"
+							Classes="addtab"
+							Grid.Column="1"
+							Margin="10,0,0,0"
+							HorizontalAlignment="Right"
+							CornerRadius="20">
+						<Viewbox Width="14" Height="14"
+								 Margin="3,5,0,0"
+								 Stretch="Fill"
+								 VerticalAlignment="Center"
+								 HorizontalAlignment="Center">
+							<Canvas Width="20" Height="20">
+								<Path Fill="Black"
+									  Stretch="Fill"
+									  Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/>
+							</Canvas>
+						</Viewbox>
+					</Button>
 				</Grid>
 			</DataTemplate>
 		</Setter>
 	</Style>
-
+	
 	<Style Selector="TabControl TabItem /template/ ContentPresenter">
-		<Setter Property="MaxHeight" Value="35"></Setter>
+		<Setter Property="Height" Value="32"></Setter>
 		<Setter Property="MaxWidth" Value="180"/>
 		<Setter Property="MinWidth" Value="30"/>
 		<Setter Property="BorderThickness" Value="0" />
 		<Setter Property="TextBlock.Foreground" Value="{DynamicResource MainColor}"></Setter>
 		<Setter Property="Background" Value="Transparent"/>
 		<Setter Property="CornerRadius" Value="10"/>
-		<Setter Property="Margin" Value="-5,5,-5,0"/>
+		<Setter Property="Margin" Value="-5,6,-5,0"/>
+		<Style.Animations>
+			<Animation Duration="0:0:0.3">
+				<KeyFrame Cue="0%">
+					<Setter Property="Background" Value="{DynamicResource MainColor}"/>
+					<Setter Property="MaxWidth" Value="5"/>
+				</KeyFrame>
+				<KeyFrame Cue="100%">
+					<Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="MaxWidth" Value="180"></Setter>
+				</KeyFrame>
+			</Animation>
+		</Style.Animations>
 	</Style>
 	
 	<Style Selector="TabControl TabItem[IsPointerOver=true] /template/ ContentPresenter">
@@ -191,18 +210,18 @@
 	</Style>
 
 	<Style Selector="TabControl TabItem[IsSelected=true] /template/ ContentPresenter">
-		<Setter Property="Margin" Value="-5,13,-5,0"/>
+		<Setter Property="Margin" Value="-5,16,-5,0"/>
 		<Setter Property="CornerRadius" Value="10,10,0,0"/>
 		<Setter Property="Background" Value="{DynamicResource Background}"/>
 		<Style.Animations>
 			<Animation Duration="0:0:0.3">
 				<KeyFrame Cue="0%">
 					<Setter Property="CornerRadius" Value="10"/>
-					<Setter Property="Margin" Value="-5,5,-5,0"/>
+					<Setter Property="Margin" Value="-5,6,-5,0"/>
 				</KeyFrame>
 				<KeyFrame Cue="100%">
 					<Setter Property="CornerRadius" Value="10,10,0,0"/>
-					<Setter Property="Margin" Value="-5,13,-5,0"/>
+					<Setter Property="Margin" Value="-5,16,-5,0"/>
 				</KeyFrame>
 			</Animation>
 		</Style.Animations>

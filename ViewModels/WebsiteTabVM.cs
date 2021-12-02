@@ -1,19 +1,32 @@
-﻿using Microsoft.Toolkit.Mvvm.Input;
-using ReactiveUI;
-using SimpleBrowser.Translations;
-using System;
-using System.Windows.Input;
-using System.Collections.ObjectModel;
-using SimpleBrowser.API;
-using Microsoft.Toolkit.Mvvm.Messaging;
-using SimpleBrowser.Services;
+﻿using System;
 using System.Collections.Generic;
-using Avalonia.Threading;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.Toolkit.Mvvm.Messaging;
+using ReactiveUI;
+using SimpleBrowser.API;
+using SimpleBrowser.Services;
+using SimpleBrowser.Translations;
 
 namespace SimpleBrowser.ViewModels
 {
     public class WebsiteTabVM : TabVM
     {
+        private string _currentAddress;
+        private ObservableCollection<string> _searchSuggestions;
+        private List<string> _history;
+        private ISearchSystem _searchSystem;
+        private string _searchText;
+
+        private ICommand _navigateCommand;
+        private ICommand _openNewWindow;
+        public ICommand _changeTitle;
+        private ICommand _goBack;
+        private ICommand _goForward;
+        private ICommand _querySet;
+        private ICommand _refresh;
+
         public WebsiteTabVM()
         {
             Name = Localizer.Instance["NewPage"];
@@ -23,45 +36,33 @@ namespace SimpleBrowser.ViewModels
             CurrentAddress = "https://www.google.com/";
         }
 
-        private ObservableCollection<string> _searchSuggestions;
         public ObservableCollection<string> SearchSuggestions
         {
-            get { return _searchSuggestions; }
-            set { this.RaiseAndSetIfChanged(ref _searchSuggestions, value); }
+            get => _searchSuggestions;
+            set => this.RaiseAndSetIfChanged(ref _searchSuggestions, value);
         }
 
-        private string _selectedResult;
-        public string SelectedResult
-        {
-            get { return _selectedResult; }
-            set { this.RaiseAndSetIfChanged(ref _selectedResult, value); }
-        }
-
-        private ISearchSystem _searchSystem;
         private ISearchSystem SearchSystem
         {
-            get { return _searchSystem; }
-            set { this.RaiseAndSetIfChanged(ref _searchSystem, value); }
+            get => _searchSystem;
+            set => this.RaiseAndSetIfChanged(ref _searchSystem, value);
         }
 
-        private string _searchText;
         public string SearchText
         {
-            get { return _searchText; }
-            set { this.RaiseAndSetIfChanged(ref _searchText, value); }
+            get => _searchText;
+            set => this.RaiseAndSetIfChanged(ref _searchText, value);
         }
 
-        private List<string> _history;
         public List<string> History
         {
-            get { return _history; }
-            set { this.RaiseAndSetIfChanged(ref _history, value); }
+            get => _history;
+            set => this.RaiseAndSetIfChanged(ref _history, value);
         }
 
-        private string _currentAddress;
         public string CurrentAddress
         {
-            get { return _currentAddress; }
+            get => _currentAddress;
             set
             {
                 this.RaiseAndSetIfChanged(ref _currentAddress, value);
@@ -70,7 +71,7 @@ namespace SimpleBrowser.ViewModels
 
                 IconUrl = "http://www.google.com/s2/favicons?domain=" + new Uri(CurrentAddress).Host;
 
-                ChangeSiteIconMessage changeSiteIcon = new ChangeSiteIconMessage(IconUrl);
+                var changeSiteIcon = new ChangeSiteIconMessage(IconUrl);
                 WeakReferenceMessenger.Default.Send(changeSiteIcon);
                 try
                 {
@@ -83,7 +84,6 @@ namespace SimpleBrowser.ViewModels
             }
         }
 
-        private ICommand _navigateCommand;
         public ICommand NavigateCommand
         {
             get
@@ -96,28 +96,20 @@ namespace SimpleBrowser.ViewModels
             }
         }
 
-        private ICommand _querySet;
         public ICommand QuerySet
         {
             get
             {
                 return _querySet ??= new RelayCommand(async () =>
                 {
-                    bool isAddress = Uri.IsWellFormedUriString(SearchText, UriKind.Absolute);
-                    if (isAddress)
-                    {
-                        return;
-                    }
-                    ObservableCollection<string> result = new ObservableCollection<string>(await SearchSystem.GetSearchSuggestions(SearchText));
-                    if (result != null)
-                    {
-                        SearchSuggestions = result;
-                    }
+                    var isAddress = Uri.IsWellFormedUriString(SearchText, UriKind.Absolute);
+                    if (isAddress) return;
+                    var result = new ObservableCollection<string>(await SearchSystem.GetSearchSuggestions(SearchText));
+                    if (result != null) SearchSuggestions = result;
                 });
             }
         }
 
-        private ICommand _goBack;
         public ICommand GoBack
         {
             get
@@ -125,15 +117,11 @@ namespace SimpleBrowser.ViewModels
                 return _goBack ??= new RelayCommand(() =>
                 {
                     WeakReferenceMessenger.Default.Send<GoBackPageMessage>();
-                    if (ChangeTitle.CanExecute(null))
-                    {
-                        ChangeTitle.Execute(null);
-                    }
+                    if (ChangeTitle.CanExecute(null)) ChangeTitle.Execute(null);
                 });
             }
         }
 
-        private ICommand _goForward;
         public ICommand GoForward
         {
             get
@@ -141,14 +129,11 @@ namespace SimpleBrowser.ViewModels
                 return _goForward ??= new RelayCommand(() =>
                 {
                     WeakReferenceMessenger.Default.Send<GoForwardPageMessage>();
-                    if (ChangeTitle.CanExecute(null))
-                    {
-                        ChangeTitle.Execute(null);
-                    }
+                    if (ChangeTitle.CanExecute(null)) ChangeTitle.Execute(null);
                 });
             }
         }
-        private ICommand _refresh;
+
         public ICommand Refresh
         {
             get
@@ -159,12 +144,12 @@ namespace SimpleBrowser.ViewModels
                 });
             }
         }
-        public ICommand _changeTitle;
+
         public ICommand ChangeTitle
         {
             get
             {
-                return _changeTitle ??= new RelayCommand( () =>
+                return _changeTitle ??= new RelayCommand(() =>
                 {
                     try
                     {
@@ -177,5 +162,16 @@ namespace SimpleBrowser.ViewModels
                 });
             }
         }
+
+        public ICommand OpenNewWindow
+        {
+            get
+            {
+                return _openNewWindow ??= new RelayCommand(() =>
+                {
+                    WeakReferenceMessenger.Default.Send<OpenNewWindowMessage>();
+                });
+            }
+        }
     }
-} 
+}

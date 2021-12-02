@@ -27,7 +27,7 @@ namespace SimpleBrowser.API
         /// </summary>
         /// <param name="query">The query.</param>
         /// <returns>A list of <see cref="GoogleSuggestion"/>s.</returns>
-        public async Task<IEnumerable<string>> GetSearchSuggestions(string query)
+        public async Task<IEnumerable<string>?> GetSearchSuggestions(string query)
 		{
 			if (String.IsNullOrWhiteSpace(query))
 			{

@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using SimpleBrowser.ViewModels;
 using SimpleBrowser.Views;
+using WebViewControl;
 
 namespace SimpleBrowser
 {
@@ -10,6 +11,8 @@ namespace SimpleBrowser
     {
         public override void Initialize()
         {
+            WebView.Settings.OsrEnabled = false;
+            WebView.Settings.PersistCache = false;
             AvaloniaXamlLoader.Load(this);
         }
 

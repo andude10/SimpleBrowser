@@ -1,56 +1,74 @@
-using Avalonia.Controls;
-using Microsoft.Toolkit.Mvvm.Input;
-using ReactiveUI;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 using System.Linq;
-using WebViewControl;
+using System.Windows.Input;
+using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.Toolkit.Mvvm.Messaging;
+using ReactiveUI;
+using SimpleBrowser.Services;
 
 namespace SimpleBrowser.ViewModels
 {
     public class MainVM : ViewModelBase
     {
+        private TabVM _selectedTab;
+        private double _tabItemCount;
+        private ObservableCollection<TabVM> _tabVMs;
+
         public MainVM()
         {
             TabVMs = new ObservableCollection<TabVM>();
             TabVMs.Add(new WebsiteTabVM());
-            TabVMs.Add(new WebsiteTabVM(){ Name="Test tab withbigtext"});
             TabVMs.Add(new WebsiteTabVM());
-            TabVMs.Add(new WebsiteTabVM());
-            SelectedTab = TabVMs.First();
+            _selectedTab = TabVMs[0];
 
             SortTabs();
         }
-        private ObservableCollection<TabVM> _tabVMs;
+
         public ObservableCollection<TabVM> TabVMs
         {
-            get { return _tabVMs; }
-            set 
-            { 
+            get => _tabVMs;
+            set
+            {
                 this.RaiseAndSetIfChanged(ref _tabVMs, value);
                 TabItemCount = TabVMs.Count;
             }
         }
-        private TabVM _selectedTab;
+
         public TabVM SelectedTab
         {
-            get { return _selectedTab; }
-            set 
-            { 
+            get => _selectedTab;
+            set
+            {
                 this.RaiseAndSetIfChanged(ref _selectedTab, value);
                 SortTabs();
             }
         }
 
-        private double _tabItemCount;
         public double TabItemCount
         {
-            get { return _tabItemCount; }
-            set { this.RaiseAndSetIfChanged(ref _tabItemCount, value); }
+            get => _tabItemCount;
+            set => this.RaiseAndSetIfChanged(ref _tabItemCount, value);
+        }
+
+        public void SortTabs()
+        {
+            for (var i = 0; i < TabVMs.Count; i++)
+            {
+                TabVMs[i].Index = i;
+                TabVMs[i].IsTabLast = false;
+                TabVMs[i].IsSelected = false;
+            }
+
+            TabVMs.Last().IsTabLast = true;
+            if (SelectedTab != null)
+            {
+                TabVMs.First(t => t == SelectedTab).IsSelected = true;
+            }
+            TabItemCount = TabVMs.Count;
         }
 
         #region Command
+
         private ICommand _addNewTab;
         public ICommand AddNewTab
         {
@@ -63,6 +81,7 @@ namespace SimpleBrowser.ViewModels
                 });
             }
         }
+
         private ICommand _removeTab;
         public ICommand RemoveTab
         {
@@ -75,19 +94,19 @@ namespace SimpleBrowser.ViewModels
                 });
             }
         }
-        #endregion
 
-        public void SortTabs()
+        private ICommand _openNewWindow;
+        public ICommand OpenNewWindow
         {
-            for (int i = 0; i < TabVMs.Count; i++)
+            get
             {
-                TabVMs[i].Index = i;
-                TabVMs[i].IsTabLast = false;
-                TabVMs[i].IsSelected = false;
+                return _openNewWindow ??= new RelayCommand(() =>
+                {
+                    WeakReferenceMessenger.Default.Send<OpenNewWindowMessage>();
+                });
             }
-            TabVMs.Last().IsTabLast = true;
-            TabVMs.First(t => t == SelectedTab).IsSelected = true;
-            TabItemCount = TabVMs.Count;
         }
+
+        #endregion
     }
 }

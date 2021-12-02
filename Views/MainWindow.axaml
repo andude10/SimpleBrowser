@@ -9,13 +9,29 @@
 		TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
 		WindowStartupLocation="CenterScreen"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaTitleBarHeightHint="-1"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="SimpleBrowser.Views.MainWindow"
         Title="SimpleBrowser">
+	
 	<Grid>
+		<StackPanel HorizontalAlignment="Stretch"
+				    VerticalAlignment="Stretch"
+				    Name="ContentWrapper"
+				    Orientation="Vertical">
+			<DockPanel Background="Transparent">
+				<views:WindowsTitleBar IsSeamless="True"
+									   Height="22"></views:WindowsTitleBar>
+				<views:MacosTitleBar IsSeamless="False"
+									 Height="22"></views:MacosTitleBar>
+			</DockPanel>
+		</StackPanel>
 		<TabControl Items="{Binding TabVMs}"
 			SelectedItem="{Binding SelectedTab}"
-			Margin="-12,0,-12,0">
+			Margin="-12,22,-12,0"
+			Grid.Row="1">
 		</TabControl>
 	</Grid>
 </Window>

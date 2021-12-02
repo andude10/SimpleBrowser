@@ -1,7 +1,4 @@
 {
   "NewPage": "Новая страница",
-  "HelloWorld": "Привет мир!",
-  "Second/HelloWorld": "Привет мир (другой контекст)",
-  "Language": "Язык",
-  "SetByCode": "Изменить кодом"
+  "OpenNewWindow": "Открыть новую страницу"
 }
