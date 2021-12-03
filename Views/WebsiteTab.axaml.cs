@@ -28,6 +28,7 @@ namespace SimpleBrowser.Views
             AvaloniaXamlLoader.Load(this);
         }
 
+        #region  Messages Handlers
         private void RefreshPage(WebsiteTab recipient, RefreshPageMessage message)
         {
             var i = this.FindControl<WebView>("webView").Title;
@@ -46,5 +47,6 @@ namespace SimpleBrowser.Views
             var i = this.FindControl<WebView>("webView").Title;
             message.Reply(i);
         }
+        #endregion
     }
 }
