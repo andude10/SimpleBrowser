@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using SimpleBrowser.ViewModels;
 using SimpleBrowser.Views;
+using System;
 using WebViewControl;
 
 namespace SimpleBrowser
@@ -13,6 +14,7 @@ namespace SimpleBrowser
         {
             WebView.Settings.OsrEnabled = false;
             WebView.Settings.PersistCache = false;
+            
             AvaloniaXamlLoader.Load(this);
         }
 
@@ -20,6 +22,7 @@ namespace SimpleBrowser
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
+                desktop.Exit += OnAppExit();
                 desktop.MainWindow = new MainWindow
                 {
                     DataContext = new MainVM(),
@@ -27,6 +30,10 @@ namespace SimpleBrowser
             }
 
             base.OnFrameworkInitializationCompleted();
+        }
+        private EventHandler<ControlledApplicationLifetimeExitEventArgs> OnAppExit()
+        {
+            return EventHandler
         }
     }
 }

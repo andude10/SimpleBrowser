@@ -25,8 +25,8 @@
 
 		<SolidColorBrush x:Key="BorderBrushFocus" Color="#2867DE"></SolidColorBrush>
 		
-		<SolidColorBrush x:Key="Foreground1" Color="White"></SolidColorBrush>
-		<SolidColorBrush x:Key="Foreground2" Color="Black"></SolidColorBrush>
+		<SolidColorBrush x:Key="Foreground1" Color="#FFFFFF"></SolidColorBrush>
+		<SolidColorBrush x:Key="Foreground2" Color="#000000"></SolidColorBrush>
 		
 		<SolidColorBrush x:Key="MainColor" Color="#3A89BA"></SolidColorBrush>
 		<SolidColorBrush x:Key="MainColor1" Color="#4cb5f5"></SolidColorBrush>

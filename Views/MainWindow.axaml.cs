@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
@@ -17,7 +18,6 @@ namespace SimpleBrowser.Views
 {
     public partial class MainWindow : Window
     {
-        private TabControl mTabControl;
         public MainWindow()
         {
             InitializeComponent();
@@ -34,44 +34,18 @@ namespace SimpleBrowser.Views
                             this.OffScreenMargin.Right,
                             this.OffScreenMargin.Bottom);
 
-            WeakReferenceMessenger.Default.Register<MainWindow, OpenNewWindowMessage>(this, OpenNewWindow);
+            WeakReferenceMessenger.Default.Register<MainWindow, OpenNewWindowMessage>(this, OpenNewWindowHandler);
 
-            mTabControl = this.FindControl<TabControl>("mainTabControl");
-            mTabControl.PointerPressed += MainTabControl_OnPointerPressed;
-            mTabControl.PointerReleased += MainTabControl_OnPointerReleased;
-            mTabControl.PointerMoved += MainTabControl_OnPointerMoved;
-            AddHandler(DragDrop.DragOverEvent, DragOver);
-
-        #if DEBUG
+#if DEBUG
             this.AttachDevTools();
         #endif
         }
 
-        #region   Messages Handlers
-        private void OpenNewWindow(MainWindow recipient, OpenNewWindowMessage message)
+        #region Messages Handlers
+        private void OpenNewWindowHandler(MainWindow recipient, OpenNewWindowMessage message)
         {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
-        }
-        #endregion
-
-        #region MainTabControl events
-        private void MainTabControl_OnPointerPressed(object sender, RoutedEventArgs e)
-        {
-            TabControl tc = this.FindControl<TabControl>("mainTabControl");
-        }
-        private void MainTabControl_OnPointerReleased(object? sender, PointerReleasedEventArgs e)
-        {
-            
-        }
-        private void MainTabControl_OnPointerMoved(object? sender, PointerEventArgs e)
-        {
-            
-        }
-
-        private void DragOver(object sender, RoutedEventArgs e)
-        {
-            
         }
         #endregion
 

@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using Avalonia.Controls;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using ReactiveUI;
@@ -74,7 +75,7 @@ namespace SimpleBrowser.ViewModels
         {
             get
             {
-                return _addNewTab ??= new RelayCommand(() =>
+                return _addNewTab = new RelayCommand(() =>
                 {
                     TabVMs.Add(new WebsiteTabVM());
                     SortTabs();
@@ -87,7 +88,7 @@ namespace SimpleBrowser.ViewModels
         {
             get
             {
-                return _removeTab ??= new RelayCommand<int>(obj =>
+                return _removeTab = new RelayCommand<int>(obj =>
                 {
                     TabVMs.RemoveAt(obj);
                     SortTabs();
@@ -100,13 +101,12 @@ namespace SimpleBrowser.ViewModels
         {
             get
             {
-                return _openNewWindow ??= new RelayCommand(() =>
+                return _openNewWindow = new RelayCommand(() =>
                 {
                     WeakReferenceMessenger.Default.Send<OpenNewWindowMessage>();
                 });
             }
         }
-
         #endregion
     }
 }

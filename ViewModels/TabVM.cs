@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using Avalonia.Media.Imaging;
+using ReactiveUI;
 using SimpleBrowser.Translations;
 
 namespace SimpleBrowser.ViewModels
@@ -23,17 +24,23 @@ namespace SimpleBrowser.ViewModels
             get { return _isSelected; }
             set { this.RaiseAndSetIfChanged(ref _isSelected, value); }
         }
+        private bool _isPointerOver;
+        public bool IsPointerOver
+        {
+            get { return _isPointerOver; }
+            set { this.RaiseAndSetIfChanged(ref _isPointerOver, value); }
+        }
         private bool _isTabLast;
         public bool IsTabLast
         {
             get { return _isTabLast; }
             set { this.RaiseAndSetIfChanged(ref _isTabLast, value); }
         }
-        private string _iconUrl;
-        public string IconUrl
+        private Bitmap _icon;
+        public Bitmap Icon
         {
-            get { return _iconUrl; }
-            set { this.RaiseAndSetIfChanged(ref _iconUrl, value); }
+            get { return _icon; }
+            set { this.RaiseAndSetIfChanged(ref _icon, value); }
         }
     }
 }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
@@ -12,6 +12,12 @@
 	<AvaloniaResource Include="Translations\**" />
     <None Remove=".gitignore" />
     <None Remove="Assets\Fonts\Montserrat-Regular.ttf" />
+    <None Remove="Settings.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AvaloniaResource>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.11-rc.1" />

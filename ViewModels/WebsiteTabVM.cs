@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Net;
 using System.Windows.Input;
+using Avalonia.Media.Imaging;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using ReactiveUI;
@@ -69,10 +72,9 @@ namespace SimpleBrowser.ViewModels
                 History.Add(CurrentAddress);
                 SearchText = CurrentAddress;
 
-                IconUrl = "http://www.google.com/s2/favicons?domain=" + new Uri(CurrentAddress).Host;
+                var iconUrl = "http://www.google.com/s2/favicons?domain=" + new Uri(CurrentAddress).Host;
+                DownloadIcon(iconUrl);
 
-                var changeSiteIcon = new ChangeSiteIconMessage(IconUrl);
-                WeakReferenceMessenger.Default.Send(changeSiteIcon);
                 try
                 {
                     Name = WeakReferenceMessenger.Default.Send<GetUrlTitleMessage>();
@@ -84,11 +86,38 @@ namespace SimpleBrowser.ViewModels
             }
         }
 
+        public void DownloadIcon(string url)
+        {
+            using (WebClient client = new WebClient())
+            {
+                client.DownloadDataAsync(new Uri(url));
+                client.DownloadDataCompleted += DownloadComplete;
+            }
+        }
+        private void DownloadComplete(object sender, DownloadDataCompletedEventArgs e)
+        {
+            try
+            {
+                byte[] bytes = e.Result;
+
+                Stream stream = new MemoryStream(bytes);
+
+                var image = new Avalonia.Media.Imaging.Bitmap(stream);
+                Icon = image;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex);
+                Icon = null;
+            }
+        }
+
+        #region Command
         public ICommand NavigateCommand
         {
             get
             {
-                return _navigateCommand ??= new RelayCommand(() =>
+                return _navigateCommand = new RelayCommand(() =>
                 {
                     CurrentAddress = SearchSystem.Search(SearchText);
                     SearchText = CurrentAddress;
@@ -100,7 +129,7 @@ namespace SimpleBrowser.ViewModels
         {
             get
             {
-                return _querySet ??= new RelayCommand(async () =>
+                return _querySet = new RelayCommand(async () =>
                 {
                     var isAddress = Uri.IsWellFormedUriString(SearchText, UriKind.Absolute);
                     if (isAddress) return;
@@ -114,7 +143,7 @@ namespace SimpleBrowser.ViewModels
         {
             get
             {
-                return _goBack ??= new RelayCommand(() =>
+                return _goBack = new RelayCommand(() =>
                 {
                     WeakReferenceMessenger.Default.Send<GoBackPageMessage>();
                     if (ChangeTitle.CanExecute(null)) ChangeTitle.Execute(null);
@@ -126,7 +155,7 @@ namespace SimpleBrowser.ViewModels
         {
             get
             {
-                return _goForward ??= new RelayCommand(() =>
+                return _goForward = new RelayCommand(() =>
                 {
                     WeakReferenceMessenger.Default.Send<GoForwardPageMessage>();
                     if (ChangeTitle.CanExecute(null)) ChangeTitle.Execute(null);
@@ -138,7 +167,7 @@ namespace SimpleBrowser.ViewModels
         {
             get
             {
-                return _refresh ??= new RelayCommand(() =>
+                return _refresh = new RelayCommand(() =>
                 {
                     WeakReferenceMessenger.Default.Send<RefreshPageMessage>();
                 });
@@ -149,7 +178,7 @@ namespace SimpleBrowser.ViewModels
         {
             get
             {
-                return _changeTitle ??= new RelayCommand(() =>
+                return _changeTitle = new RelayCommand(() =>
                 {
                     try
                     {
@@ -167,11 +196,12 @@ namespace SimpleBrowser.ViewModels
         {
             get
             {
-                return _openNewWindow ??= new RelayCommand(() =>
+                return _openNewWindow = new RelayCommand(() =>
                 {
                     WeakReferenceMessenger.Default.Send<OpenNewWindowMessage>();
                 });
             }
         }
+        #endregion
     }
 }
