@@ -10,14 +10,9 @@
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
 	<AvaloniaResource Include="Translations\**" />
+	<AvaloniaResource Remove="Assets\settings.json" />
     <None Remove=".gitignore" />
     <None Remove="Assets\Fonts\Montserrat-Regular.ttf" />
-    <None Remove="Settings.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <AvaloniaResource Include="Settings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </AvaloniaResource>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.11-rc.1" />
@@ -29,6 +24,11 @@
     <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="WebViewControl-Avalonia" Version="2.91.11" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\settings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <AvaloniaResource Update="Assets\Fonts\Montserrat-Regular.ttf">

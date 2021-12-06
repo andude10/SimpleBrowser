@@ -199,6 +199,10 @@
 													Content="{LOC:Localize OpenNewWindow}"
 													CornerRadius="20">
 											</Button>
+                                            <Button Command="{Binding OpenSettingsWindow}"
+                                                    Content="{LOC:Localize Settings}"
+                                                    CornerRadius="20">
+                                            </Button>
 										</StackPanel>
 									</Border>
 								</Popup>

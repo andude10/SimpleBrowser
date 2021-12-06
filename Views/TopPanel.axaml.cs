@@ -6,7 +6,7 @@ using WebViewControl;
 
 namespace SimpleBrowser.Views
 {
-    public partial class TopPanel : UserControl
+    public class TopPanel : UserControl
     {
         public TopPanel()
         {

@@ -1,5 +1,5 @@
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System;
+using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
@@ -8,11 +8,6 @@ using SimpleBrowser.Services;
 using SimpleBrowser.Translations;
 using SimpleBrowser.ViewModels;
 using System.Runtime.InteropServices;
-using Avalonia.Input;
-using Avalonia.Interactivity;
-using System.Linq;
-using WebViewControl;
-using Avalonia.Controls.Shapes;
 
 namespace SimpleBrowser.Views
 {
@@ -35,8 +30,10 @@ namespace SimpleBrowser.Views
                             this.OffScreenMargin.Bottom);
 
             WeakReferenceMessenger.Default.Register<MainWindow, OpenNewWindowMessage>(this, OpenNewWindowHandler);
+            WeakReferenceMessenger.Default.Register<MainWindow, OpenSettingsWindowMessage>(this, OpenSettingsWindowHandler);
+            OpenSettingsWindowHandler(null, null);
 
-#if DEBUG
+        #if DEBUG
             this.AttachDevTools();
         #endif
         }
@@ -46,6 +43,11 @@ namespace SimpleBrowser.Views
         {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
+        }
+        private void OpenSettingsWindowHandler(MainWindow recipient, OpenSettingsWindowMessage message)
+        {
+            SettingsWindow settingsWindow = new SettingsWindow();
+            settingsWindow.Show();
         }
         #endregion
 

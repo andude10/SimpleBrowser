@@ -3,4 +3,5 @@
 	
 	<StyleInclude Source="avares://SimpleBrowser/Theme/CustomControls/MainTabsControl.axaml"></StyleInclude>
 	<StyleInclude Source="avares://SimpleBrowser/Theme/Constants.axaml"></StyleInclude>
+	<StyleInclude Source="avares://SimpleBrowser/Theme/Views/SettingsWindow.axaml"></StyleInclude>
 </Styles>

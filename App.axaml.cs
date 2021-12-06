@@ -4,6 +4,9 @@ using Avalonia.Markup.Xaml;
 using SimpleBrowser.ViewModels;
 using SimpleBrowser.Views;
 using System;
+using System.Diagnostics;
+using System.IO;
+using Newtonsoft.Json;
 using WebViewControl;
 
 namespace SimpleBrowser
@@ -22,18 +25,23 @@ namespace SimpleBrowser
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.Exit += OnAppExit();
+                desktop.Exit += OnAppExit;
+                desktop.Startup += OnAppStartup;
                 desktop.MainWindow = new MainWindow
                 {
                     DataContext = new MainVM(),
                 };
             }
-
             base.OnFrameworkInitializationCompleted();
         }
-        private EventHandler<ControlledApplicationLifetimeExitEventArgs> OnAppExit()
+
+        private void OnAppExit(Object? obj, ControlledApplicationLifetimeExitEventArgs args)
         {
-            return EventHandler
+            Settings.SerializeInstance();
+        }
+        private void OnAppStartup(Object? obj, ControlledApplicationLifetimeStartupEventArgs args)
+        {
+            Settings.DeserializeInstance();
         }
     }
 }
