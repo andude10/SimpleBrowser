@@ -5,7 +5,13 @@
 		xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
         xmlns:ic="using:Avalonia.Xaml.Interactions.Custom"
         xmlns:LOC="clr-namespace:SimpleBrowser.Translations">
-	<StyleInclude Source="avares://SimpleBrowser/Theme/Constants.axaml"/>
+	<Styles.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceInclude Source="avares://SimpleBrowser/Theme/Constants.axaml"></ResourceInclude>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Styles.Resources>
 	
     <Design.PreviewWith>
 		<Border Background="Green">

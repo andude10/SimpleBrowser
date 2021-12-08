@@ -6,15 +6,7 @@ namespace SimpleBrowser.ViewModels
 {
     public class SettingsVM : ViewModelBase
     {
-        public SettingsVM()
-        {
-            LanguageCode = Settings.LanguageCode;
-            Foreground1 = Settings.Foreground1;
-            Foreground2 = Settings.Foreground2;
-            Background = Settings.Background;
-            MainColor = Settings.MainColor;
-            IsTransparentScreenBackground = Settings.IsTransparentScreenBackground;
-        }
+        private ICommand _applySettings;
         private string _background;
 
         private string _foreground1;
@@ -25,6 +17,16 @@ namespace SimpleBrowser.ViewModels
         private string _languageCode;
 
         private string _mainColor;
+
+        public SettingsVM()
+        {
+            LanguageCode = Settings.LanguageCode;
+            Foreground1 = Settings.Foreground1;
+            Foreground2 = Settings.Foreground2;
+            Background = Settings.Background;
+            MainColor = Settings.MainColor;
+            IsTransparentScreenBackground = Settings.IsTransparentScreenBackground;
+        }
 
         public string LanguageCode
         {
@@ -62,7 +64,6 @@ namespace SimpleBrowser.ViewModels
             set => this.RaiseAndSetIfChanged(ref _isTransparentScreenBackground, value);
         }
 
-        private ICommand _applySettings;
         public ICommand ApplySettings
         {
             get

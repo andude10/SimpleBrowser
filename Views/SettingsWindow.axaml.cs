@@ -1,7 +1,9 @@
 using System.Runtime.InteropServices;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Platform;
 using SimpleBrowser.ViewModels;
 
 namespace SimpleBrowser.Views
@@ -14,22 +16,21 @@ namespace SimpleBrowser.Views
             DataContext = new SettingsVM();
 
             // Do not use a custom title bar on Linux, because there are too many possible options.
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                UseNativeTitleBar();
-            }
-            this.Padding = new Thickness(
-                this.OffScreenMargin.Left,
-                this.OffScreenMargin.Top,
-                this.OffScreenMargin.Right,
-                this.OffScreenMargin.Bottom);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) UseNativeTitleBar();
+            Padding = new Thickness(
+                OffScreenMargin.Left,
+                OffScreenMargin.Top,
+                OffScreenMargin.Right,
+                OffScreenMargin.Bottom);
+
 #if DEBUG
             this.AttachDevTools();
 #endif
         }
+
         private void UseNativeTitleBar()
         {
-            ExtendClientAreaChromeHints = Avalonia.Platform.ExtendClientAreaChromeHints.SystemChrome;
+            ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.SystemChrome;
             ExtendClientAreaTitleBarHeightHint = -1;
             ExtendClientAreaToDecorationsHint = false;
         }
@@ -37,6 +38,11 @@ namespace SimpleBrowser.Views
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
+        }
+
+        private void Button_OnClick(object? sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

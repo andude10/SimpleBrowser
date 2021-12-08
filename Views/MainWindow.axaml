@@ -15,8 +15,8 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="SimpleBrowser.Views.MainWindow"
         Title="SimpleBrowser">
-	
-	<Grid>
+
+    <Grid>
 		<StackPanel HorizontalAlignment="Stretch"
 				    VerticalAlignment="Stretch"
 				    Name="ContentWrapper"
@@ -29,9 +29,10 @@
 			</DockPanel>
 		</StackPanel>
 		<TabControl Name="mainTabControl"
-            Items="{Binding TabVMs}"
-			SelectedItem="{Binding SelectedTab}"
-			Margin="-12,22,-12,0">
+					Classes="tabs"
+                    Items="{Binding TabVMs}"
+			        SelectedItem="{Binding SelectedTab}"
+			        Margin="-12,22,-12,0">
         </TabControl>
 	</Grid>
 </Window>

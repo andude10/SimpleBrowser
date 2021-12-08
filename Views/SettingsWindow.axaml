@@ -2,7 +2,232 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:views="clr-namespace:SimpleBrowser.Views"
+        mc:Ignorable="d"
+
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaTitleBarHeightHint="-1"
+        WindowStartupLocation="CenterOwner"
+        Width="660"
+        Height="580"
         x:Class="SimpleBrowser.Views.SettingsWindow"
         Title="SettingsWindow">
+    <Window.Styles>
+        <Style Selector="ToggleButton">
+            <Setter Property="CornerRadius" Value="18" />
+            <Setter Property="Background" Value="{DynamicResource Background}" />
+        </Style>
+        <Style Selector="ToggleButton[IsChecked=true] /template/ ContentPresenter">
+            <Setter Property="Content">
+                <Template>
+                    <Viewbox Width="38" Height="38"
+                             Name="PART_CheckIcon">
+                        <Canvas Width="24" Height="24">
+                            <Path Fill="{DynamicResource Foreground1}"
+                                  Data="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+                        </Canvas>
+                    </Viewbox>
+                </Template>
+            </Setter>
+            <Style.Animations>
+                <Animation Duration="0:0:0.3">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="Background" Value="{DynamicResource Background}" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Background" Value="{DynamicResource MainColor}" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+
+        <Style Selector="TextBox">
+            <Setter Property="Background" Value="{DynamicResource Background}" />
+        </Style>
+        <Style Selector="TextBox[IsPointerOver=true] /template/ Border">
+            <Setter Property="CornerRadius" Value="18" />
+            <Style.Animations>
+                <Animation Duration="0:0:0.3">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="CornerRadius" Value="8" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="CornerRadius" Value="18" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+        <Style Selector="TextBox[IsPointerOver=false] /template/ Border">
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Foreground}" />
+            <Style.Animations>
+                <Animation Duration="0:0:0.3">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="CornerRadius" Value="18" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="CornerRadius" Value="8" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+    </Window.Styles>
+    <Grid>
+        <StackPanel HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Name="ContentWrapper"
+                    Orientation="Vertical">
+            <DockPanel Background="Transparent">
+                <views:WindowsTitleBar IsSeamless="True"
+                                       Height="22" />
+                <views:MacosTitleBar IsSeamless="False"
+                                     Height="22" />
+            </DockPanel>
+        </StackPanel>
+        <StackPanel>
+            <TabControl Margin="0,30,0,0"
+                        Classes="tabSettings">
+                <TabItem Header="Settings" FontSize="28"
+                         Margin="10">
+                    <Border Margin="15"
+                            Background="{DynamicResource MainColor}"
+                            CornerRadius="10">
+                        <StackPanel Orientation="Vertical"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    Margin="0,15,0,0">
+                            <StackPanel.Styles>
+                                <Style Selector="Button[IsPointerOver=true] /template/ ContentPresenter">
+                                    <Setter Property="Background" Value="#40000000" />
+                                    <Style.Animations>
+                                        <Animation Duration="0:0:0.3">
+                                            <KeyFrame Cue="0%">
+                                                <Setter Property="Background" Value="#10000000" />
+                                            </KeyFrame>
+                                            <KeyFrame Cue="100%">
+                                                <Setter Property="Background" Value="#40000000" />
+                                            </KeyFrame>
+                                        </Animation>
+                                    </Style.Animations>
+                                </Style>
+                                <Style Selector="Button[IsPointerOver=false] /template/ ContentPresenter">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Style.Animations>
+                                        <Animation Duration="0:0:0.3">
+                                            <KeyFrame Cue="0%">
+                                                <Setter Property="Background" Value="#40000000" />
+                                            </KeyFrame>
+                                            <KeyFrame Cue="100%">
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </KeyFrame>
+                                        </Animation>
+                                    </Style.Animations>
+                                </Style>
+                            </StackPanel.Styles>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="LanguageCode"
+                                       FontSize="20"
+                                       Width="270"
+                                       Margin="14" />
+                                <TextBox Text="{Binding LanguageCode}"
+                                         Width="80"
+                                         VerticalAlignment="Top" FontSize="20"
+                                         Margin="12" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="MainColor"
+                                       FontSize="20"
+                                       Width="270"
+                                       Margin="14" />
+                                <TextBox Text="{Binding MainColor}"
+                                         Width="80"
+                                         VerticalAlignment="Top" FontSize="20"
+                                         Margin="12" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Background"
+                                       FontSize="20"
+                                       Width="270"
+                                       Margin="14" />
+                                <TextBox Text="{Binding Background}"
+                                         Width="80"
+                                         VerticalAlignment="Top" FontSize="20"
+                                         Margin="12" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Foreground1"
+                                       FontSize="20"
+                                       Width="270"
+                                       Margin="14" />
+                                <TextBox Text="{Binding Foreground1}"
+                                         Width="80"
+                                         VerticalAlignment="Top" FontSize="20"
+                                         Margin="12" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Foreground2"
+                                       FontSize="20"
+                                       Width="270"
+                                       Margin="14" />
+                                <TextBox Text="{Binding Foreground2}"
+                                         Width="80"
+                                         VerticalAlignment="Top" FontSize="20"
+                                         Margin="12" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="IsTransparentScreenBackground"
+                                       FontSize="20"
+                                       Width="300"
+                                       Margin="14" />
+                                <ToggleButton IsChecked="{Binding IsTransparentScreenBackground}"
+                                              VerticalAlignment="Top" FontSize="20"
+                                              Height="40" Width="40"
+                                              Margin="12" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </TabItem>
+            </TabControl>
+            <Button Command="{Binding ApplySettings}"
+                    Content="Apply"
+                    Click="Button_OnClick"
+                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                    Height="40" Width="100"
+                    Margin="5,5,25,0"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                    CornerRadius="8">
+                <Button.Styles>
+                    <Style Selector="Button[IsPointerOver=true] /template/ ContentPresenter">
+                        <Setter Property="Background" Value="{DynamicResource MainColor1}" />
+                        <Style.Animations>
+                            <Animation Duration="0:0:0.3">
+                                <KeyFrame Cue="0%">
+                                    <Setter Property="Background" Value="{DynamicResource MainColor}" />
+                                </KeyFrame>
+                                <KeyFrame Cue="100%">
+                                    <Setter Property="Background" Value="{DynamicResource MainColor1}" />
+                                </KeyFrame>
+                            </Animation>
+                        </Style.Animations>
+                    </Style>
+                    <Style Selector="Button[IsPointerOver=false] /template/ ContentPresenter">
+                        <Setter Property="Background" Value="{DynamicResource MainColor}" />
+                        <Style.Animations>
+                            <Animation Duration="0:0:0.3">
+                                <KeyFrame Cue="0%">
+                                    <Setter Property="Background" Value="{DynamicResource MainColor1}" />
+                                </KeyFrame>
+                                <KeyFrame Cue="100%">
+                                    <Setter Property="Background" Value="{DynamicResource MainColor}" />
+                                </KeyFrame>
+                            </Animation>
+                        </Style.Animations>
+                    </Style>
+                </Button.Styles>
+            </Button>
+        </StackPanel>
+    </Grid>
 </Window>

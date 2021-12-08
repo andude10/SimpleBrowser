@@ -1,37 +1,20 @@
-<Style xmlns="https://github.com/avaloniaui"
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	   xmlns:sys="clr-namespace:System;assembly=mscorlib">
 	
-	<Design.PreviewWith>
-		<StackPanel Margin="10">
-			<StackPanel Margin="10">
-				<Label Content="Background" ></Label>
-				<Label Content="MainColor" Background="{DynamicResource MainColor}"></Label>
-				<Label Content="SecondColor" Background="{DynamicResource MainColor1}"></Label>
-			</StackPanel>
-			<StackPanel Margin="10">
-				<Label Content="Color1"></Label>
-				<Label Content="Color2"></Label>
-				<Label Content="Color3"></Label>
-			</StackPanel>
-		</StackPanel>
-	</Design.PreviewWith>
-	<Style.Resources>
-		<!--Brushes-->
-		<SolidColorBrush x:Key="Background" Color="#FFFFFF"></SolidColorBrush>
-		<SolidColorBrush x:Key="Background1" Color="#BCC2BE"></SolidColorBrush>
-		<SolidColorBrush x:Key="Background1Pointover" Color="#DAE0DC"></SolidColorBrush>
-		<SolidColorBrush x:Key="Background1Focus" Color="#878C87"></SolidColorBrush>
+	<SolidColorBrush x:Key="Background" Color="#FFFFFF"></SolidColorBrush>
+	<SolidColorBrush x:Key="Background1" Color="#BCC2BE"></SolidColorBrush>
+	<SolidColorBrush x:Key="Background1Pointover" Color="#DAE0DC"></SolidColorBrush>
+	<SolidColorBrush x:Key="Background1Focus" Color="#878C87"></SolidColorBrush>
 
-		<SolidColorBrush x:Key="BorderBrushFocus" Color="#2867DE"></SolidColorBrush>
+	<SolidColorBrush x:Key="BorderBrushFocus" Color="#2867DE"></SolidColorBrush>
 		
-		<SolidColorBrush x:Key="Foreground1" Color="#FFFFFF"></SolidColorBrush>
-		<SolidColorBrush x:Key="Foreground2" Color="#000000"></SolidColorBrush>
+	<SolidColorBrush x:Key="Foreground1" Color="#FFFFFF"></SolidColorBrush>
+	<SolidColorBrush x:Key="Foreground2" Color="#000000"></SolidColorBrush>
 		
-		<SolidColorBrush x:Key="MainColor" Color="#3A89BA"></SolidColorBrush>
-		<SolidColorBrush x:Key="MainColor1" Color="#4cb5f5"></SolidColorBrush>
-		<SolidColorBrush x:Key="MainColor2" Color="#007791"></SolidColorBrush>
+	<SolidColorBrush x:Key="MainColor" Color="#3A89BA"></SolidColorBrush>
+	<SolidColorBrush x:Key="MainColor1" Color="#4cb5f5"></SolidColorBrush>
+	<SolidColorBrush x:Key="MainColor2" Color="#007791"></SolidColorBrush>
 		
-		<SolidColorBrush x:Key="SecondColor" Color="#ffccbb"></SolidColorBrush>
-	</Style.Resources>
-</Style>
+	<SolidColorBrush x:Key="SecondColor" Color="#ffccbb"></SolidColorBrush>
+</ResourceDictionary>

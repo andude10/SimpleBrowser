@@ -6,6 +6,8 @@ using SimpleBrowser.Views;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using Avalonia.Controls;
 using Newtonsoft.Json;
 using WebViewControl;
 

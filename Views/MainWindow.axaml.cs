@@ -31,7 +31,6 @@ namespace SimpleBrowser.Views
 
             WeakReferenceMessenger.Default.Register<MainWindow, OpenNewWindowMessage>(this, OpenNewWindowHandler);
             WeakReferenceMessenger.Default.Register<MainWindow, OpenSettingsWindowMessage>(this, OpenSettingsWindowHandler);
-            OpenSettingsWindowHandler(null, null);
 
         #if DEBUG
             this.AttachDevTools();
@@ -47,7 +46,7 @@ namespace SimpleBrowser.Views
         private void OpenSettingsWindowHandler(MainWindow recipient, OpenSettingsWindowMessage message)
         {
             SettingsWindow settingsWindow = new SettingsWindow();
-            settingsWindow.Show();
+            settingsWindow.ShowDialog(this);
         }
         #endregion
 

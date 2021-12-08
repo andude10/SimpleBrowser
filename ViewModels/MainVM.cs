@@ -95,30 +95,6 @@ namespace SimpleBrowser.ViewModels
                 });
             }
         }
-
-        private ICommand _openNewWindow;
-        public ICommand OpenNewWindow
-        {
-            get
-            {
-                return _openNewWindow = new RelayCommand(() =>
-                {
-                    WeakReferenceMessenger.Default.Send<OpenNewWindowMessage>();
-                });
-            }
-        }
-
-        private ICommand _openSettingsWindow;
-        public ICommand OpenSettingsWindow
-        {
-            get
-            {
-                return _openSettingsWindow = new RelayCommand(() =>
-                {
-                    WeakReferenceMessenger.Default.Send<OpenSettingsWindowMessage>();
-                });
-            }
-        }
         #endregion
     }
 }
