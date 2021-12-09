@@ -1,6 +1,6 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 	
-    <StyleInclude Source="avares://SimpleBrowser/DefaultTheme/LightTheme/Views/"></StyleInclude>
-    <StyleInclude Source="avares://SimpleBrowser/Theme/Views/TopPanel.axaml"></StyleInclude>
+    <StyleInclude Source="avares://SimpleBrowser/DefaultThemes/LightTheme/Views/TopPanel.axaml"></StyleInclude>
+    <StyleInclude Source="avares://SimpleBrowser/DefaultThemes/LightTheme/CustomControls/MainTabsControl.axaml"></StyleInclude>
 </Styles>

@@ -4,11 +4,11 @@ using Avalonia.Markup.Xaml;
 using SimpleBrowser.ViewModels;
 using SimpleBrowser.Views;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using Avalonia.Controls;
-using Newtonsoft.Json;
+using Avalonia.Markup.Xaml.MarkupExtensions;
+using Avalonia.Markup.Xaml.Styling;
+using SimpleBrowser.Translations;
 using WebViewControl;
 
 namespace SimpleBrowser
@@ -44,6 +44,22 @@ namespace SimpleBrowser
         private void OnAppStartup(Object? obj, ControlledApplicationLifetimeStartupEventArgs args)
         {
             Settings.DeserializeInstance();
+            var selectedThemeStyle = new StyleInclude(new Uri($"avares://SimpleBrowser/DefaultThemes/{Settings.SelectedTheme}/Generic.axaml"))
+            {
+                Source = new Uri($"avares://SimpleBrowser/DefaultThemes/{Settings.SelectedTheme}/Generic.axaml")
+            };
+            Application.Current.Styles.Add(selectedThemeStyle);
+            /*
+            else
+            {
+                var selectedThemeStyle = new StyleInclude(new Uri($"CustomThemes\\{Settings.SelectedTheme}"))
+                {
+                    Source = new Uri($"Themes\\DefaultTheme")
+                };
+                Application.Current.Styles.Add(selectedThemeStyle);
+            }
+            */
+            Localizer.Instance.LoadLanguage(Settings.SelectedLanguageCode);
         }
     }
 }

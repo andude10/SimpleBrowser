@@ -10,7 +10,7 @@
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
 	<AvaloniaResource Include="Translations\**" />
-	<AvaloniaResource Remove="Assets\settings.json" />
+    <AvaloniaResource Include="Themes\**" />
     <None Remove=".gitignore" />
     <None Remove="Assets\Fonts\Montserrat-Regular.ttf" />
   </ItemGroup>
@@ -26,11 +26,6 @@
     <PackageReference Include="WebViewControl-Avalonia" Version="2.91.11" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\settings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <AvaloniaResource Update="Assets\Fonts\Montserrat-Regular.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AvaloniaResource>
@@ -40,5 +35,12 @@
     <AvaloniaResource Update="Assets\Languages\ru.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </AvaloniaResource>
+  </ItemGroup>
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Themes\BrowserTheme.cs" />
+    <UpToDateCheckInput Remove="Themes\DefaultTheme\Constants.axaml" />
+    <UpToDateCheckInput Remove="Themes\DefaultTheme\CustomControls\MainTabsControl.axaml" />
+    <UpToDateCheckInput Remove="Themes\DefaultTheme\Generic.axaml" />
+    <UpToDateCheckInput Remove="Themes\DefaultTheme\Views\TopPanel.axaml" />
   </ItemGroup>
 </Project>

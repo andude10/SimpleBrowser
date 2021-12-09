@@ -11,8 +11,8 @@
         ExtendClientAreaChromeHints="NoChrome"
         ExtendClientAreaTitleBarHeightHint="-1"
         WindowStartupLocation="CenterOwner"
-        Width="660"
-        Height="580"
+        Width="520"
+        Height="480"
         x:Class="SimpleBrowser.Views.SettingsWindow"
         Title="SettingsWindow">
     <Window.Styles>
@@ -44,6 +44,11 @@
             </Style.Animations>
         </Style>
 
+        <Style Selector="Label">
+            <Setter Property="TextBox.Foreground" Value="{DynamicResource Foreground2}"/>
+            <Setter Property="Width" Value="200"></Setter>
+        </Style>
+
         <Style Selector="TextBox">
             <Setter Property="Background" Value="{DynamicResource Background}" />
         </Style>
@@ -62,7 +67,7 @@
         </Style>
         <Style Selector="TextBox[IsPointerOver=false] /template/ Border">
             <Setter Property="CornerRadius" Value="8" />
-            <Setter Property="BorderBrush" Value="{DynamicResource Foreground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Foreground2}" />
             <Style.Animations>
                 <Animation Duration="0:0:0.3">
                     <KeyFrame Cue="0%">
@@ -89,12 +94,17 @@
         </StackPanel>
         <StackPanel>
             <TabControl Margin="0,30,0,0"
-                        Classes="tabSettings">
-                <TabItem Header="Settings" FontSize="28"
-                         Margin="10">
-                    <Border Margin="15"
-                            Background="{DynamicResource MainColor}"
-                            CornerRadius="10">
+                        Background="Transparent">
+                <TabItem Header="Settings"
+                         FontSize="28"
+                         Background="Transparent"
+                         Margin="5">
+                    <Border Margin="10"
+                            Height="300"
+                            Background="{DynamicResource Background}"
+                            CornerRadius="10"
+                            BorderThickness="3"
+                            BorderBrush="{DynamicResource MainColor}">
                         <StackPanel Orientation="Vertical"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Top"
@@ -128,64 +138,24 @@
                                 </Style>
                             </StackPanel.Styles>
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="LanguageCode"
+                                <Label Content="Language"
                                        FontSize="20"
-                                       Width="270"
                                        Margin="14" />
-                                <TextBox Text="{Binding LanguageCode}"
-                                         Width="80"
+                                <ComboBox Items="{Binding Languages}"
+                                          SelectedItem="{Binding SelectedLanguage}"
+                                         Width="150"
                                          VerticalAlignment="Top" FontSize="20"
                                          Margin="12" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="MainColor"
+                                <Label Content="Theme"
                                        FontSize="20"
-                                       Width="270"
                                        Margin="14" />
-                                <TextBox Text="{Binding MainColor}"
-                                         Width="80"
-                                         VerticalAlignment="Top" FontSize="20"
-                                         Margin="12" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Background"
-                                       FontSize="20"
-                                       Width="270"
-                                       Margin="14" />
-                                <TextBox Text="{Binding Background}"
-                                         Width="80"
-                                         VerticalAlignment="Top" FontSize="20"
-                                         Margin="12" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Foreground1"
-                                       FontSize="20"
-                                       Width="270"
-                                       Margin="14" />
-                                <TextBox Text="{Binding Foreground1}"
-                                         Width="80"
-                                         VerticalAlignment="Top" FontSize="20"
-                                         Margin="12" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Foreground2"
-                                       FontSize="20"
-                                       Width="270"
-                                       Margin="14" />
-                                <TextBox Text="{Binding Foreground2}"
-                                         Width="80"
-                                         VerticalAlignment="Top" FontSize="20"
-                                         Margin="12" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="IsTransparentScreenBackground"
-                                       FontSize="20"
-                                       Width="300"
-                                       Margin="14" />
-                                <ToggleButton IsChecked="{Binding IsTransparentScreenBackground}"
-                                              VerticalAlignment="Top" FontSize="20"
-                                              Height="40" Width="40"
-                                              Margin="12" />
+                                <ComboBox Items="{Binding Themes}"
+                                          SelectedItem="{Binding SelectedTheme}"
+                                          Width="150"
+                                          VerticalAlignment="Top" FontSize="20"
+                                          Margin="12" />
                             </StackPanel>
                         </StackPanel>
                     </Border>

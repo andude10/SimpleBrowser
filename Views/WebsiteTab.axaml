@@ -10,9 +10,6 @@
 			 xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
 			 xmlns:ic="using:Avalonia.Xaml.Interactions.Custom"
 			 Margin="0,-7.5,0,0">
-	<UserControl.Styles>
-		<StyleInclude Source="/Theme/Views/TopPanel.axaml"/>
-	</UserControl.Styles>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="50"></RowDefinition>

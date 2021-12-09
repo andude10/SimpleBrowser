@@ -8,7 +8,7 @@
 		<Styles.Resources>
 			<ResourceDictionary>
 				<ResourceDictionary.MergedDictionaries>
-					<ResourceInclude Source="avares://SimpleBrowser/DefaultThemes/LightTheme/Constants.axaml"></ResourceInclude>
+					<ResourceInclude Source="avares://SimpleBrowser/DefaultThemes/DarkTheme/Constants.axaml"></ResourceInclude>
 				</ResourceDictionary.MergedDictionaries>
 			</ResourceDictionary>
 		</Styles.Resources>
@@ -69,7 +69,7 @@
 								 VerticalAlignment="Center"
 								 HorizontalAlignment="Center">
 							<Canvas Width="20" Height="20">
-								<Path Fill="Black"
+								<Path Fill="{DynamicResource Foreground2}"
 									  Stretch="Fill"
 									  Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/>
 							</Canvas>
@@ -144,7 +144,7 @@
                                  VerticalAlignment="Center"
                                  HorizontalAlignment="Center">
                             <Canvas Width="20" Height="20">
-                                <Path Fill="Black"
+                                <Path Fill="{DynamicResource Foreground2}"
                                       Stretch="Fill"
                                       Data="M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z"/>
                             </Canvas>

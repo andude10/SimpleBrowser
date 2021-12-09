@@ -8,7 +8,7 @@
 	<Styles.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceInclude Source="avares://SimpleBrowser/DefaultThemes/LightTheme/Constants.axaml"></ResourceInclude>
+				<ResourceInclude Source="avares://SimpleBrowser/DefaultThemes/DarkTheme/Constants.axaml"></ResourceInclude>
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</Styles.Resources>
@@ -34,6 +34,7 @@
 					</Grid.ColumnDefinitions>
 					<Grid.Styles>
 						<Style Selector="Button[IsPointerOver=true] /template/ ContentPresenter">
+							<Setter Property="TextBox.Foreground" Value="{DynamicResource Foreground2}"></Setter>
 							<Setter Property="Background" Value="#40000000"/>
 							<Style.Animations>
 								<Animation Duration="0:0:0.3">
@@ -47,6 +48,7 @@
 							</Style.Animations>
 						</Style>
 						<Style Selector="Button[IsPointerOver=false] /template/ ContentPresenter">
+							<Setter Property="TextBox.Foreground" Value="{DynamicResource Foreground2}"></Setter>
 							<Setter Property="Background" Value="Transparent"/>
 							<Style.Animations>
 								<Animation Duration="0:0:0.3">
@@ -133,7 +135,7 @@
 							<Viewbox Width="35" Height="35"
 									 Margin="12,15,1.5,0">
 								<Canvas Width="27" Height="27">
-									<Path Fill="Black"
+									<Path Fill="{DynamicResource Foreground2}"
 										  Stretch="Fill"
 										  Data="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
 								</Canvas>
@@ -146,7 +148,7 @@
 							<Viewbox Width="35" Height="35"
 									 Margin="12,15,1.5,0">
 								<Canvas Width="27" Height="27">
-									<Path Fill="Black"
+									<Path Fill="{DynamicResource Foreground2}"
 										  Stretch="Fill"
 										  Data="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" />
 								</Canvas>
@@ -160,7 +162,7 @@
 									 Margin="11.5,12,1.5,0">
 								<Canvas  Width="27" Height="27">
 									<Path Stretch="Fill"
-										  Fill="Black" 
+										  Fill="{DynamicResource Foreground2}" 
 										  Data="M2 12C2 16.97 6.03 21 11 21C13.39 21 15.68 20.06 17.4 18.4L15.9 16.9C14.63 18.25 12.86 19 11 19C4.76 19 1.64 11.46 6.05 7.05C10.46 2.64 18 5.77 18 12H15L19 16H19.1L23 12H20C20 7.03 15.97 3 11 3C6.03 3 2 7.03 2 12Z" />
 								</Canvas>
 							</Viewbox>
@@ -203,10 +205,12 @@
 										<StackPanel>
 											<Button Command="{Binding OpenNewWindow}"
 													Content="{LOC:Localize OpenNewWindow}"
+													Width="200"
 													CornerRadius="20">
 											</Button>
                                             <Button Command="{Binding OpenSettingsWindow}"
                                                     Content="{LOC:Localize Settings}"
+                                                    Width="200"
                                                     CornerRadius="20">
                                             </Button>
 										</StackPanel>
@@ -216,7 +220,7 @@
 									     Height="30" Width="30">
 									<Canvas Width="27" Height="27">
 										<Path Stretch="Fill"
-											  Fill="Black" 
+											  Fill="{DynamicResource Foreground2}" 
 											  Data="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z" />
 									</Canvas>
 								</Viewbox>

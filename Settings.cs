@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Platform;
+using HarfBuzzSharp;
 using Newtonsoft.Json;
 
 namespace SimpleBrowser
@@ -17,13 +18,9 @@ namespace SimpleBrowser
         {
             internal static Settings Instance = new Settings();
         }
+
         private Settings()
         {
-        }
-
-        public static Settings GetInstance()
-        {
-            return SettingsNested.Instance;
         }
 
         public static void SerializeInstance()
@@ -31,29 +28,37 @@ namespace SimpleBrowser
             string json = JsonConvert.SerializeObject(SettingsNested.Instance);
             File.WriteAllTextAsync("settings.json", json);
         }
+
         public static void DeserializeInstance()
         {
             if (!File.Exists("settings.json"))
             {
-                SettingsNested.Instance = new Settings();
+                SerializeInstance();
                 return;
             }
+
             string json = File.ReadAllText("settings.json");
             SettingsNested.Instance = JsonConvert.DeserializeObject<Settings>(json);
         }
-        
-        [JsonProperty]
-        public static string LanguageCode { get; set; }
 
-        [JsonProperty]
-        public static string MainColor { get; set; }
-        [JsonProperty]
-        public static string Background { get; set; }
-        [JsonProperty]
-        public static string Foreground1 { get; set; }
-        [JsonProperty]
-        public static string Foreground2 { get; set; }
-        [JsonProperty]
-        public static bool IsTransparentScreenBackground { get; set; }
+        [JsonProperty] private static string _selectedLanguageCode;
+        public static string SelectedLanguageCode
+        {
+            get => _selectedLanguageCode ?? "en";
+            set => _selectedLanguageCode = value;
+        }
+
+        public static List<string> LanguageCodes { get; }
+            = new List<string>() {"en", "ru"};
+
+        public static List<string> Themes { get; set; }
+            = new List<string>() {"LightTheme", "DarkTheme"};
+
+        private static string _selectedTheme;
+        [JsonProperty] public static string SelectedTheme {
+            get => _selectedTheme ?? Themes.First();
+            set => _selectedTheme = value;
+        }
     }
 }
+

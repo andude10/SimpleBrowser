@@ -2,15 +2,15 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	   xmlns:sys="clr-namespace:System;assembly=mscorlib">
 	
-	<SolidColorBrush x:Key="Background" Color="#FFFFFF"></SolidColorBrush>
-	<SolidColorBrush x:Key="Background1" Color="#BCC2BE"></SolidColorBrush>
-	<SolidColorBrush x:Key="Background1Pointover" Color="#DAE0DC"></SolidColorBrush>
-	<SolidColorBrush x:Key="Background1Focus" Color="#878C87"></SolidColorBrush>
+	<SolidColorBrush x:Key="Background" Color="#000000"></SolidColorBrush>
+	<SolidColorBrush x:Key="Background1" Color="#2B2B2B"></SolidColorBrush>
+	<SolidColorBrush x:Key="Background1Pointover" Color="#454746"></SolidColorBrush>
+	<SolidColorBrush x:Key="Background1Focus" Color="#A2A8A2"></SolidColorBrush>
 
 	<SolidColorBrush x:Key="BorderBrushFocus" Color="#2867DE"></SolidColorBrush>
 		
-	<SolidColorBrush x:Key="Foreground1" Color="#FFFFFF"></SolidColorBrush>
-	<SolidColorBrush x:Key="Foreground2" Color="#000000"></SolidColorBrush>
+	<SolidColorBrush x:Key="Foreground1" Color="#000000"></SolidColorBrush>
+	<SolidColorBrush x:Key="Foreground2" Color="#FFFFFF"></SolidColorBrush>
 		
 	<SolidColorBrush x:Key="MainColor" Color="#3A89BA"></SolidColorBrush>
 	<SolidColorBrush x:Key="MainColor1" Color="#4cb5f5"></SolidColorBrush>

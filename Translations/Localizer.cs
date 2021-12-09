@@ -19,7 +19,7 @@ namespace SimpleBrowser.Translations
         public Localizer()
         {
             LoadLanguage("en");
-            LanguageCode = Settings.LanguageCode;
+            LanguageCode = Settings.SelectedLanguageCode;
         }
 
         public bool LoadLanguage(string languageCode)

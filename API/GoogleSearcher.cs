@@ -39,7 +39,7 @@ namespace SimpleBrowser.API
 			using (HttpClient client = new HttpClient())
 			{
 				string suggestSearchUrl;
-				switch(Settings.LanguageCode)
+				switch(Settings.SelectedLanguageCode)
                 {
 					case "en":
 						suggestSearchUrl = _ENsuggestSearchUrl;
