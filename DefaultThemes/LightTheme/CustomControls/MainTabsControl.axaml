@@ -16,9 +16,9 @@
 	<Design.PreviewWith>
 		<TabControl Width="500" Height="500" Background="{DynamicResource Background1}">
 			<TabControl.Items>
-				<vm:TabVM Name="somenamesdfsfsdfsdfsdfs"></vm:TabVM>
-				<vm:TabVM Name="somename"></vm:TabVM>
-				<vm:TabVM Name="somename"></vm:TabVM>
+				<TabItem Header="test"></TabItem>
+                <TabItem Header="test"></TabItem>
+                <TabItem Header="test"></TabItem>
 			</TabControl.Items>
 		</TabControl>
 	</Design.PreviewWith>
@@ -157,7 +157,7 @@
 	
 	<Style Selector="TabControl TabItem /template/ ContentPresenter">
 		<Setter Property="Height" Value="32"></Setter>
-		<Setter Property="MaxWidth" Value="180"/>
+		<Setter Property="MaxWidth" Value="200"/>
 		<Setter Property="MinWidth" Value="30"/>
 		<Setter Property="BorderThickness" Value="0" />
 		<Setter Property="TextBlock.Foreground" Value="{DynamicResource MainColor}"></Setter>
@@ -212,7 +212,9 @@
 	</Style>
 
 	<Style Selector="TabControl TabItem[IsSelected=true] /template/ ContentPresenter">
-		<Setter Property="Margin" Value="-5,16,-5,0"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource MainColor}"></Setter>
+		<Setter Property="BorderThickness" Value="3,3,3,0"></Setter>
+        <Setter Property="Margin" Value="-5,16,-5,0"/>
 		<Setter Property="CornerRadius" Value="10,10,0,0"/>
 		<Setter Property="Background" Value="{DynamicResource Background}"/>
 		<Style.Animations>

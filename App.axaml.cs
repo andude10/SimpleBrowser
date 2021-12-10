@@ -1,14 +1,14 @@
+using System;
+using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Markup.Xaml.Styling;
+using Microsoft.Toolkit.Mvvm.Messaging;
+using SimpleBrowser.Services;
+using SimpleBrowser.Translations;
 using SimpleBrowser.ViewModels;
 using SimpleBrowser.Views;
-using System;
-using System.IO;
-using System.Linq;
-using Avalonia.Markup.Xaml.MarkupExtensions;
-using Avalonia.Markup.Xaml.Styling;
-using SimpleBrowser.Translations;
 using WebViewControl;
 
 namespace SimpleBrowser
@@ -19,36 +19,59 @@ namespace SimpleBrowser
         {
             WebView.Settings.OsrEnabled = false;
             WebView.Settings.PersistCache = false;
-            
+
+            WeakReferenceMessenger.Default.Register<Application, OpenNewWindowMessage>(this, OpenNewWindowHandler);
+            WeakReferenceMessenger.Default.Register<Application, OpenSettingsWindowMessage>(this, OpenSettingsWindowHandler);
+
             AvaloniaXamlLoader.Load(this);
         }
+
+        #region Messages Handlers
+        private void OpenNewWindowHandler(Application recipient, OpenNewWindowMessage message)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+        }
+        private void OpenSettingsWindowHandler(Application recipient, OpenSettingsWindowMessage message)
+        {
+            if (Avalonia.Application.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                SettingsWindow settingsWindow = new SettingsWindow();
+                settingsWindow.ShowDialog(desktop.MainWindow);
+            }
+        }
+        #endregion
 
         public override void OnFrameworkInitializationCompleted()
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 desktop.Exit += OnAppExit;
-                desktop.Startup += OnAppStartup;
+                InitialSetup();
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainVM(),
+                    DataContext = new MainVM()
                 };
             }
+
             base.OnFrameworkInitializationCompleted();
         }
 
-        private void OnAppExit(Object? obj, ControlledApplicationLifetimeExitEventArgs args)
+        private void OnAppExit(object? obj, ControlledApplicationLifetimeExitEventArgs args)
         {
             Settings.SerializeInstance();
         }
-        private void OnAppStartup(Object? obj, ControlledApplicationLifetimeStartupEventArgs args)
+
+        private void InitialSetup()
         {
             Settings.DeserializeInstance();
-            var selectedThemeStyle = new StyleInclude(new Uri($"avares://SimpleBrowser/DefaultThemes/{Settings.SelectedTheme}/Generic.axaml"))
-            {
-                Source = new Uri($"avares://SimpleBrowser/DefaultThemes/{Settings.SelectedTheme}/Generic.axaml")
-            };
-            Application.Current.Styles.Add(selectedThemeStyle);
+            var selectedThemeStyle =
+                new StyleInclude(
+                    new Uri($"avares://SimpleBrowser/DefaultThemes/{Settings.SelectedTheme}/Generic.axaml"))
+                {
+                    Source = new Uri($"avares://SimpleBrowser/DefaultThemes/{Settings.SelectedTheme}/Generic.axaml")
+                };
+            Current.Styles.Add(selectedThemeStyle);
             /*
             else
             {

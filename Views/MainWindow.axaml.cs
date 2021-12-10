@@ -8,6 +8,7 @@ using SimpleBrowser.Services;
 using SimpleBrowser.Translations;
 using SimpleBrowser.ViewModels;
 using System.Runtime.InteropServices;
+using DynamicData.Binding;
 
 namespace SimpleBrowser.Views
 {
@@ -29,26 +30,10 @@ namespace SimpleBrowser.Views
                             this.OffScreenMargin.Right,
                             this.OffScreenMargin.Bottom);
 
-            WeakReferenceMessenger.Default.Register<MainWindow, OpenNewWindowMessage>(this, OpenNewWindowHandler);
-            WeakReferenceMessenger.Default.Register<MainWindow, OpenSettingsWindowMessage>(this, OpenSettingsWindowHandler);
-
-        #if DEBUG
+#if DEBUG
             this.AttachDevTools();
-        #endif
+#endif
         }
-
-        #region Messages Handlers
-        private void OpenNewWindowHandler(MainWindow recipient, OpenNewWindowMessage message)
-        {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-        }
-        private void OpenSettingsWindowHandler(MainWindow recipient, OpenSettingsWindowMessage message)
-        {
-            SettingsWindow settingsWindow = new SettingsWindow();
-            settingsWindow.ShowDialog(this);
-        }
-        #endregion
 
         private void UseNativeTitleBar()
         {

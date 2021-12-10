@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SimpleBrowser.Services
 {
-    public class TabEvent
+    public class TabEventMessage
     {
         public int TabIndex { get; set; }
         public EventName? Event { get; set; }

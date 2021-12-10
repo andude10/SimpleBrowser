@@ -1,11 +1,7 @@
-﻿using Avalonia.Data;
+﻿using System;
+using Avalonia.Data;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.MarkupExtensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SimpleBrowser.Translations
 {
@@ -13,7 +9,7 @@ namespace SimpleBrowser.Translations
     {
         public LocalizeExtension(string key)
         {
-            this.Key = key;
+            Key = key;
         }
 
         public string Key { get; set; }
@@ -29,7 +25,7 @@ namespace SimpleBrowser.Translations
             var binding = new ReflectionBindingExtension($"[{keyToUse}]")
             {
                 Mode = BindingMode.OneWay,
-                Source = Localizer.Instance,
+                Source = Localizer.Instance
             };
 
             return binding.ProvideValue(serviceProvider);

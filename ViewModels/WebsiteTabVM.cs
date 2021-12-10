@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Windows.Input;
@@ -16,19 +17,19 @@ namespace SimpleBrowser.ViewModels
 {
     public class WebsiteTabVM : TabVM
     {
-        private string _currentAddress;
-        private ObservableCollection<string> _searchSuggestions;
-        private List<string> _history;
-        private ISearchSystem _searchSystem;
-        private string _searchText;
-
         private ICommand _navigateCommand;
         private ICommand _openNewWindow;
+        private ICommand _querySet;
+        private ICommand _refresh;
         public ICommand _changeTitle;
         private ICommand _goBack;
         private ICommand _goForward;
-        private ICommand _querySet;
-        private ICommand _refresh;
+        private ISearchSystem _searchSystem;
+
+        private string _currentAddress;
+        private List<string> _history;
+        private ObservableCollection<string> _searchSuggestions;
+        private string _searchText;
 
         public WebsiteTabVM()
         {
@@ -88,39 +89,50 @@ namespace SimpleBrowser.ViewModels
 
         public void DownloadIcon(string url)
         {
-            using (WebClient client = new WebClient())
+            using (var client = new WebClient())
             {
                 client.DownloadDataAsync(new Uri(url));
                 client.DownloadDataCompleted += DownloadComplete;
             }
         }
+
         private void DownloadComplete(object sender, DownloadDataCompletedEventArgs e)
         {
             try
             {
-                byte[] bytes = e.Result;
+                var bytes = e.Result;
 
                 Stream stream = new MemoryStream(bytes);
 
-                var image = new Avalonia.Media.Imaging.Bitmap(stream);
+                var image = new Bitmap(stream);
                 Icon = image;
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex);
+                Debug.WriteLine(ex);
                 Icon = null;
             }
         }
 
+
         #region Command
+
         public ICommand NavigateCommand
         {
             get
             {
                 return _navigateCommand = new RelayCommand(() =>
                 {
-                    CurrentAddress = SearchSystem.Search(SearchText);
-                    SearchText = CurrentAddress;
+                    var isAddress = Uri.IsWellFormedUriString(SearchText, UriKind.Absolute);
+                    if (isAddress)
+                    {
+                        CurrentAddress = SearchText;
+                    }
+                    else
+                    {
+                        CurrentAddress = SearchSystem.Search(SearchText);
+                        SearchText = CurrentAddress;
+                    }
                 });
             }
         }
@@ -204,6 +216,7 @@ namespace SimpleBrowser.ViewModels
         }
 
         private ICommand _openSettingsWindow;
+
         public ICommand OpenSettingsWindow
         {
             get
@@ -214,6 +227,7 @@ namespace SimpleBrowser.ViewModels
                 });
             }
         }
+
         #endregion
     }
 }

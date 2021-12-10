@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SimpleBrowser.Services
 {
-    public class CanGoForward : RequestMessage<bool>
+    public class CanGoForwardMessage : RequestMessage<bool>
     {
     }
 }

@@ -9,22 +9,22 @@ namespace SimpleBrowser.ViewModels
     public class SettingsVM : ViewModelBase
     {
         private ICommand _applySettings;
-        private List<string> _themes;
-        private List<string> _languages;
+        private List<CultureInfo> _languages;
         private CultureInfo _selectedLanguage;
         private string _selectedTheme;
-        
+        private List<string> _themes;
+
         public SettingsVM()
         {
             SelectedLanguage = new CultureInfo(Settings.SelectedLanguageCode);
-            Languages = new List<string>();
+            Languages = new List<CultureInfo>();
             Themes = Settings.Themes;
             SelectedTheme = Settings.SelectedTheme;
-            
+
             foreach (var t in Settings.LanguageCodes)
-                Languages.Add(new CultureInfo(t).EnglishName);
+                Languages.Add(new CultureInfo(t));
         }
-        
+
         public List<string> Themes
         {
             get => _themes;
@@ -37,17 +37,18 @@ namespace SimpleBrowser.ViewModels
             set => this.RaiseAndSetIfChanged(ref _selectedTheme, value);
         }
 
-        public List<string> Languages
+        public List<CultureInfo> Languages
         {
             get => _languages;
             set => this.RaiseAndSetIfChanged(ref _languages, value);
         }
-        
+
         public CultureInfo SelectedLanguage
         {
             get => _selectedLanguage;
             set => this.RaiseAndSetIfChanged(ref _selectedLanguage, value);
         }
+
         public ICommand ApplySettings
         {
             get

@@ -2,9 +2,9 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	   xmlns:sys="clr-namespace:System;assembly=mscorlib">
 	
-	<SolidColorBrush x:Key="Background" Color="#000000"></SolidColorBrush>
-	<SolidColorBrush x:Key="Background1" Color="#2B2B2B"></SolidColorBrush>
-	<SolidColorBrush x:Key="Background1Pointover" Color="#454746"></SolidColorBrush>
+	<SolidColorBrush x:Key="Background" Color="#212121"></SolidColorBrush>
+	<SolidColorBrush x:Key="Background1" Color="#454545"></SolidColorBrush>
+	<SolidColorBrush x:Key="Background1Pointover" Color="#6B6B6B"></SolidColorBrush>
 	<SolidColorBrush x:Key="Background1Focus" Color="#A2A8A2"></SolidColorBrush>
 
 	<SolidColorBrush x:Key="BorderBrushFocus" Color="#2867DE"></SolidColorBrush>

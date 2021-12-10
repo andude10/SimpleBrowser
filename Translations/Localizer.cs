@@ -1,12 +1,11 @@
-﻿using Avalonia;
-using Avalonia.Platform;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
-using System.Text.Unicode;
+using Avalonia;
+using Avalonia.Platform;
+using Newtonsoft.Json;
 
 namespace SimpleBrowser.Translations
 {
@@ -14,46 +13,13 @@ namespace SimpleBrowser.Translations
     {
         private const string IndexerName = "Item";
         private const string IndexerArrayName = "Item[]";
-        private static Dictionary<string, string>? m_Strings = null;
+        private static Dictionary<string, string>? m_Strings;
 
         public Localizer()
         {
             LoadLanguage("en");
             LanguageCode = Settings.SelectedLanguageCode;
         }
-
-        public bool LoadLanguage(string languageCode)
-        {
-            LanguageCode = languageCode;
-            var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
-
-            Uri uri = new Uri($"avares://SimpleBrowser/Assets/Languages/{languageCode}.json");
-            if (assets.Exists(uri))
-            {
-                Encoding encoding;
-                switch(languageCode)
-                {
-                    case "ru":
-                        encoding = CodePagesEncodingProvider.Instance.GetEncoding(1251);
-                        break;
-                    case "en":
-                        encoding = Encoding.UTF8;
-                        break;
-                    default:
-                        encoding = Encoding.Default;
-                        break;
-                }
-                using (StreamReader sr = new StreamReader(assets.Open(uri), encoding))
-                {
-                    string json = sr.ReadToEnd();
-                    m_Strings = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-                }
-                Invalidate();
-
-                return true;
-            }
-            return false;
-        } // LoadLanguage
 
         public string LanguageCode { get; private set; }
 
@@ -69,8 +35,44 @@ namespace SimpleBrowser.Translations
             }
         }
 
-        public static Localizer Instance { get; set; } = new Localizer();
+        public static Localizer Instance { get; set; } = new();
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public bool LoadLanguage(string languageCode)
+        {
+            LanguageCode = languageCode;
+            var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
+
+            var uri = new Uri($"avares://SimpleBrowser/Assets/Languages/{languageCode}.json");
+            if (assets.Exists(uri))
+            {
+                Encoding encoding;
+                switch (languageCode)
+                {
+                    case "ru":
+                        encoding = CodePagesEncodingProvider.Instance.GetEncoding(1251);
+                        break;
+                    case "en":
+                        encoding = Encoding.UTF8;
+                        break;
+                    default:
+                        encoding = Encoding.Default;
+                        break;
+                }
+
+                using (var sr = new StreamReader(assets.Open(uri), encoding))
+                {
+                    var json = sr.ReadToEnd();
+                    m_Strings = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+                }
+
+                Invalidate();
+
+                return true;
+            }
+
+            return false;
+        } // LoadLanguage
 
         public void Invalidate()
         {

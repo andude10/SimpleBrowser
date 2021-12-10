@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DynamicData.Tests;
 
 namespace SimpleBrowser.API
 {
     public interface ISearchSystem
     {
-        public abstract string Name { get; }
-        public abstract Task<IEnumerable<string>?> GetSearchSuggestions(string query);
-        public abstract string Search(string searchtext);
+        public string Name { get; }
+        public Task<IEnumerable<string>?> GetSearchSuggestions(string query);
+        public string Search(string searchText);
     }
 }

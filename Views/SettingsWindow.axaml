@@ -3,6 +3,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:SimpleBrowser.Views"
+        xmlns:LOC="clr-namespace:SimpleBrowser.Translations"
+        xmlns:glob="clr-namespace:System.Globalization;assembly=mscorlib"
         mc:Ignorable="d"
 
         TransparencyLevelHint="AcrylicBlur"
@@ -16,6 +18,10 @@
         x:Class="SimpleBrowser.Views.SettingsWindow"
         Title="SettingsWindow">
     <Window.Styles>
+        <Style Selector="TabControl TabItem /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent"></Setter>
+        </Style>
+
         <Style Selector="ToggleButton">
             <Setter Property="CornerRadius" Value="18" />
             <Setter Property="Background" Value="{DynamicResource Background}" />
@@ -95,7 +101,7 @@
         <StackPanel>
             <TabControl Margin="0,30,0,0"
                         Background="Transparent">
-                <TabItem Header="Settings"
+                <TabItem Header="{LOC:Localize Settings}"
                          FontSize="28"
                          Background="Transparent"
                          Margin="5">
@@ -138,22 +144,22 @@
                                 </Style>
                             </StackPanel.Styles>
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="Language"
+                                <Label Content="{LOC:Localize Language}"
                                        FontSize="20"
                                        Margin="14" />
                                 <ComboBox Items="{Binding Languages}"
                                           SelectedItem="{Binding SelectedLanguage}"
-                                         Width="150"
-                                         VerticalAlignment="Top" FontSize="20"
-                                         Margin="12" />
+                                          Width="180"
+                                          VerticalAlignment="Top" FontSize="20"
+                                          Margin="12" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="Theme"
+                                <Label Content="{LOC:Localize Theme}"
                                        FontSize="20"
                                        Margin="14" />
                                 <ComboBox Items="{Binding Themes}"
                                           SelectedItem="{Binding SelectedTheme}"
-                                          Width="150"
+                                          Width="180"
                                           VerticalAlignment="Top" FontSize="20"
                                           Margin="12" />
                             </StackPanel>
