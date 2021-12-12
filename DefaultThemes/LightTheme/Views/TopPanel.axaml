@@ -176,7 +176,7 @@
 									 Margin="0,6,0,10"
 									 CornerRadius="15"
 									 BorderThickness="0"
-									 Background="{DynamicResource Background1}">
+									 Background="{DynamicResource Black}">
 						<i:Interaction.Behaviors>
 							<ia:EventTriggerBehavior EventName="TextChanged" SourceObject="{Binding #searchBox}">
 								<ia:InvokeCommandAction Command="{Binding QuerySet}"></ia:InvokeCommandAction>

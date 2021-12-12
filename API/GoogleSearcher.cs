@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -15,17 +16,14 @@ namespace SimpleBrowser.API
         ///     Add gl=dk for Google Denmark. Add lr=lang_da for danish results. Add hl=da to indicate the language of the UI
         ///     making the request.
         /// </remarks>
-        private const string ENsuggestSearchUrl = "http://www.google.com/complete/search?output=toolbar&q={0}&hl=en";
-
-        private const string RUsuggestSearchUrl = "http://www.google.com/complete/search?output=toolbar&q={0}&hl=ru";
-        private const string _uriSearchString = "http://google.com/search?q=";
+        private const string SuggestSearchUrl = "http://www.google.com/complete/search?output=toolbar&q={0}&hl=en";
+        private const string UriSearchString = "http://google.com/search?q=";
 
         public string Name { get; } = "Google";
 
         /// <summary>
-        ///     Gets the search suggestions from Google.
+        ///  Gets the search suggestions from Google.
         /// </summary>
-        /// <param name="query">The query.</param>
         /// <returns>A list of <see cref="GoogleSuggestion" />s.</returns>
         public async Task<IEnumerable<string>?> GetSearchSuggestions(string query)
         {
@@ -35,21 +33,7 @@ namespace SimpleBrowser.API
 
             using (var client = new HttpClient())
             {
-                string suggestSearchUrl;
-                switch (Settings.SelectedLanguageCode)
-                {
-                    case "en":
-                        suggestSearchUrl = ENsuggestSearchUrl;
-                        break;
-                    case "ru":
-                        suggestSearchUrl = RUsuggestSearchUrl;
-                        break;
-                    default:
-                        suggestSearchUrl = ENsuggestSearchUrl;
-                        break;
-                }
-
-                result = await client.GetStringAsync(string.Format(suggestSearchUrl, query));
+                result = await client.GetStringAsync(string.Format(SuggestSearchUrl, query));
             }
 
             var doc = XDocument.Parse(result);
@@ -65,9 +49,12 @@ namespace SimpleBrowser.API
             return suggestions.Select(s => s.Phrase.ToString());
         }
 
+        /// <summary>
+        ///  Returning a query string to google
+        /// </summary>
         public string Search(string searchText)
         {
-            return _uriSearchString + searchText.Trim();
+            return UriSearchString + searchText.Trim();
         }
     }
 

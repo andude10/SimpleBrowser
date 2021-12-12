@@ -5,11 +5,14 @@ using Newtonsoft.Json;
 
 namespace SimpleBrowser
 {
+    /// <summary>
+    /// Class <c>Settings</c> implements the Singleton pattern
+    /// </summary>
     public class Settings
     {
         [JsonProperty] private static string _selectedLanguageCode;
 
-        private static string _selectedTheme;
+        [JsonProperty] private static string _selectedTheme;
 
         private Settings()
         {
@@ -25,7 +28,7 @@ namespace SimpleBrowser
 
         public static List<string> Themes { get; set; } = new() {"LightTheme", "DarkTheme"};
 
-        [JsonProperty]
+        ///<value>Property <c>SelectedTheme</c> represents the currently selected theme by the user </value>
         public static string SelectedTheme
         {
             get => _selectedTheme ?? Themes.First();
@@ -40,6 +43,7 @@ namespace SimpleBrowser
 
         public static void DeserializeInstance()
         {
+            // if the old settings.json file does not exist, creates a new one
             if (!File.Exists("settings.json"))
             {
                 SerializeInstance();
@@ -50,8 +54,9 @@ namespace SimpleBrowser
             SettingsNested.Instance = JsonConvert.DeserializeObject<Settings>(json);
         }
 
-        private class SettingsNested
+        public class SettingsNested
         {
+            ///<value>Property <c>Instance</c> represents the only instance of the Settings class, for serialization - deserialization </value>
             internal static Settings Instance = new();
         }
     }

@@ -40,6 +40,9 @@ namespace SimpleBrowser.Views
             AvaloniaXamlLoader.Load(this);
         }
 
+        /// <summary>
+        /// Close window button
+        /// </summary>
         private void Button_OnClick(object? sender, RoutedEventArgs e)
         {
             Close();

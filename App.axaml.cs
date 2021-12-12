@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.Styling;
@@ -15,8 +16,11 @@ namespace SimpleBrowser
 {
     public class App : Application
     {
+        private List<Window> Windows { get; set; }
+
         public override void Initialize()
         {
+            Windows = new List<Window>();
             WebView.Settings.OsrEnabled = false;
             WebView.Settings.PersistCache = false;
 

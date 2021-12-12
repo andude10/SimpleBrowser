@@ -1,50 +1,35 @@
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Shapes;
-using Avalonia.LogicalTree;
-using Avalonia.Markup.Xaml;
-using Avalonia.Media.Imaging;
-using Avalonia.Platform;
 using System;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Avalonia.Markup.Xaml;
 
 namespace SimpleBrowser.Views
 {
+    /// <summary>
+    ///  This is not my code, honestly took from https://github.com/FrankenApps/Avalonia-CustomTitleBarTemplate
+    /// </summary
     public class MacosTitleBar : UserControl
     {
-        private Button closeButton;
-        private Button minimizeButton;
-        private Button zoomButton;
-
-        private DockPanel titleBarBackground;
-        private StackPanel titleAndWindowIconWrapper;
-
         public static readonly StyledProperty<bool> IsSeamlessProperty =
-        AvaloniaProperty.Register<MacosTitleBar, bool>(nameof(IsSeamless));
+            AvaloniaProperty.Register<MacosTitleBar, bool>(nameof(IsSeamless));
 
-        public bool IsSeamless
-        {
-            get { return GetValue(IsSeamlessProperty); }
-            set
-            {
-                SetValue(IsSeamlessProperty, value);
-                if (titleBarBackground != null && titleAndWindowIconWrapper != null)
-                {
-                    titleBarBackground.IsVisible = IsSeamless ? false : true;
-                    titleAndWindowIconWrapper.IsVisible = IsSeamless ? false : true;
-                }
-            }
-        }
+        private readonly Button closeButton;
+        private readonly Button minimizeButton;
+        private readonly StackPanel titleAndWindowIconWrapper;
+
+        private readonly DockPanel titleBarBackground;
+        private readonly Button zoomButton;
 
         public MacosTitleBar()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) == false)
             {
-                this.IsVisible = false;
+                IsVisible = false;
             }
             else
             {
@@ -63,60 +48,55 @@ namespace SimpleBrowser.Views
             }
         }
 
-        private void CloseWindow(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+        public bool IsSeamless
         {
-            Window hostWindow = (Window)this.VisualRoot;
+            get => GetValue(IsSeamlessProperty);
+            set
+            {
+                SetValue(IsSeamlessProperty, value);
+                if (titleBarBackground != null && titleAndWindowIconWrapper != null)
+                {
+                    titleBarBackground.IsVisible = IsSeamless ? false : true;
+                    titleAndWindowIconWrapper.IsVisible = IsSeamless ? false : true;
+                }
+            }
+        }
+
+        private void CloseWindow(object sender, RoutedEventArgs e)
+        {
+            var hostWindow = (Window) VisualRoot;
             hostWindow.Close();
         }
 
-        private void MaximizeWindow(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+        private void MaximizeWindow(object sender, RoutedEventArgs e)
         {
-            Window hostWindow = (Window)this.VisualRoot;
+            var hostWindow = (Window) VisualRoot;
 
-            if (hostWindow.WindowState == WindowState.Normal)
-            {
-                hostWindow.WindowState = WindowState.Maximized;
-            }
-            else
-            {
-                hostWindow.WindowState = WindowState.Normal;
-            }
+            hostWindow.WindowState = hostWindow.WindowState == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
         }
 
-        private void MinimizeWindow(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+        private void MinimizeWindow(object sender, RoutedEventArgs e)
         {
-            Window hostWindow = (Window)this.VisualRoot;
+            var hostWindow = (Window) VisualRoot;
             hostWindow.WindowState = WindowState.Minimized;
         }
 
         private async void SubscribeToWindowState()
         {
-            Window hostWindow = (Window)this.VisualRoot;
+            var hostWindow = (Window) VisualRoot;
 
             while (hostWindow == null)
             {
-                hostWindow = (Window)this.VisualRoot;
+                hostWindow = (Window) VisualRoot;
                 await Task.Delay(50);
             }
 
             hostWindow.ExtendClientAreaTitleBarHeightHint = 44;
             hostWindow.GetObservable(Window.WindowStateProperty).Subscribe(s =>
             {
-                if (s != WindowState.Maximized)
-                {
-                    hostWindow.Padding = new Thickness(0, 0, 0, 0);
-                }
+                if (s != WindowState.Maximized) hostWindow.Padding = new Thickness(0, 0, 0, 0);
                 if (s == WindowState.Maximized)
-                {
                     hostWindow.Padding = new Thickness(7, 7, 7, 7);
-
-                    // This should be a more universal approach in both cases, but I found it to be less reliable, when for example double-clicking the title bar.
-                    /*hostWindow.Padding = new Thickness(
-                            hostWindow.OffScreenMargin.Left,
-                            hostWindow.OffScreenMargin.Top,
-                            hostWindow.OffScreenMargin.Right,
-                            hostWindow.OffScreenMargin.Bottom);*/
-                }
             });
         }
 

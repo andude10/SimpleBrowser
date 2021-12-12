@@ -115,13 +115,10 @@
 					<TranslateTransform X="-33"
 										Y="0"></TranslateTransform>
 				</StackPanel.RenderTransform>
-				<Image Source="/Assets/Images/avalonia-logo.ico"
-					   Height="25"
-					   Width="25"></Image>
-				<TextBlock Text="Custom TitleBar Demo"
-						   FontSize="20"
-						   VerticalAlignment="Center"
-						   Foreground="{DynamicResource MacOsWindowTitleColor}">
+                <TextBlock Text="Custom TitleBar Demo"
+                           FontSize="20"
+                           VerticalAlignment="Center"
+                           Foreground="{DynamicResource MacOsWindowTitleColor}">
 					<!--#999EA1-->
 					<!--#4D4D4D-->
 				</TextBlock>

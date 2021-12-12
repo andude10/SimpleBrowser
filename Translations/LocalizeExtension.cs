@@ -20,7 +20,9 @@ namespace SimpleBrowser.Translations
         {
             var keyToUse = Key;
             if (!string.IsNullOrWhiteSpace(Context))
+            {
                 keyToUse = $"{Context}/{Key}";
+            }
 
             var binding = new ReflectionBindingExtension($"[{keyToUse}]")
             {
